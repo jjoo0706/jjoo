@@ -35,6 +35,7 @@ def Permutations3(x):
     return permutations
 print(Permutations3('abc'))
 
+# Homework assigned 10/23 
 # Write down all the permutations for either a string of length 3 or 4 or 5 
 # Try to identify the different ways that you might get to this permutations 
 # Try seeing if there's a systematic way to create permutations while only moving ONE letter 
