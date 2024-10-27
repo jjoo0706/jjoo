@@ -33,17 +33,30 @@ def Permutations3(x):
                 if i != j and i != k and j != k:
                     permutations += [x[i] + x[j] + x[k]]
     return permutations
-print(Permutations3('abc'))
+# print(Permutations3('abc'))
 
-# Homework assigned 10/23 
-# Write down all the permutations for either a string of length 3 or 4 or 5 
-# Try to identify the different ways that you might get to this permutations 
-# Try seeing if there's a systematic way to create permutations while only moving ONE letter 
+
+# Homework assigned 10/27 
+# Work on the below code to the best of your ability 
 
 def Permutations3_v2(x): 
+    permutations = []
+    Comb = ''
+    for i in x:
+        if i in x:
+            Comb = x - i
+            permutations += i + Comb
+            permutations += i + Comb[1] + Comb[0]
+    return permutations
+
+# print(Permutations3_v2('abc'))
+
+# if 'a' in ['a', 'b', 'c']: 
+#     print('True')
+
     
 
-# x = ['a', 'b', 'c', 'd']
+x = ['a', 'b', 'c', 'd']
 # for i in x: 
 #     print(i) 
 
