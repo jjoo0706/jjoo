@@ -23,7 +23,7 @@ def PermutationsStr(x):
             if i != j:
                 permutations += [x[i] + x[j]]
     return permutations
-print(PermutationsStr('ab'))
+# print(PermutationsStr('ab'))
 
 def Permutations3(x):
     permutations = []
@@ -39,17 +39,35 @@ def Permutations3(x):
 # Homework assigned 10/27 
 # Work on the below code to the best of your ability 
 
+def remove_letter(x, y):
+    NewWord = ''
+    for i in x:
+        if i != y:
+            NewWord += i
+    return NewWord
+
+# Assigned 11/10 
+# Write a function that will write down the permutations of the string using the below logic. 
+# ['a']
+# ['ab', 'ba']
+# ['cab', 'acb', 'abc'] + ['cba', 'bca', 'bac']
+# ['cab', 'acb', 'abc', 'cba', 'bca', 'bac']
+
 def Permutations3_v2(x): 
     permutations = []
     Comb = ''
     for i in x:
         if i in x:
-            Comb = x - i
-            permutations += i + Comb
-            permutations += i + Comb[1] + Comb[0]
+            Comb = remove_letter(x, i)
+            permutations += [i + Comb]
+            permutations += [i + Comb[1] + Comb[0]]
     return permutations
 
-# print(Permutations3_v2('abc'))
+print(Permutations3_v2('abc'))
+
+def Permutations3_v3(x):
+    permutations = []
+    
 
 # if 'a' in ['a', 'b', 'c']: 
 #     print('True')
@@ -94,4 +112,5 @@ def factorial(n):
         return 1
     else:
         return n * factorial(n-1)
-print(factorial(3))
+# print(factorial(3))
+
