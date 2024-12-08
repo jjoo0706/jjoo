@@ -101,7 +101,7 @@ def PosB(x):
     lst += [x + p[0]]
     lst += [p[0] + x]
     return lst
-print(PosB('b'))
+# print(PosB('b'))
 
 p1 = ['ba', 'ab']
 # ['cba', 'bca', 'bac', 'cab', 'acb', 'abc']
@@ -115,66 +115,33 @@ def Comb(x, y):
     return lst
 # print(Comb(p1, "c"))
 
-def temporary_helper(): 
-    for i in range(len(x) + 1):
-        lst += [x[num][:i] + y + x[num][i:]]
-
-def temporary_helper_v2(x, y, z): 
-    lst = []
-    for i in range(len(x) + 1):
-        lst += [x[z][:i] + y + x[z][i:]]
-    return lst
-
-# ASSIGNED NOVEMBER 17: continue this code 
+# ASSIGNED 12/8: work on this code so that it works for lists of any size with any permutation. 
+# x : list of any size that are permutations 
+# y : a character 
+# goal: function that will input the new character into every position of every permutation in the list x  
 def Comb1(x, y):
     lst = []
-    # num = 0
-    # temporary_helper()
-    # num = 1 
-    # temporary_helper()
-    num = 0
-    temporary_helper()
-    num = 1 
-    temporary_helper()
+    for i in x:
+        for i in range(len(i) + 1):
+            lst += x[:i] + [y] + x[i:]
+    return lst 
+print(Comb1(['a'], 'b'))
+print(Comb1(['ab', 'ba'], "c"))
+print(Comb1(['cab', 'acb', 'abc', 'cba', 'bca', 'bac'], 'd'))
+
+def original_comb1(x,y):
+    lst = [] 
+    for num in range(2): 
+        print("num", num)
+        for i in range(len(x) + 1):
+            print("i", i)
+            print("x", x)
+            print("x[num]", x[num])
+            print("x[num][:i]", x[num][:i])
+            print("y", y) 
+            print("x[num][i:]", x[num][i:])
+            lst += [x[num][:i] + y + x[num][i:]]
+            print("lst", lst)
     return lst
-# print(Comb1(p1, "c"))
 
-# ASSIGNED 11/17: try to put everything together, so that Comb, Comb1 are all in one code 
-    
-
-def exercise(x): 
-    y = 0 
-    x = x + 1 
-    y = 1 
-    x = x + 1 
-    y = 2
-    x = x + 1 
-    # how do you print out 0, 1, and 2 but only using 2 lines of code? 
-    # output: 
-    # 0
-    # 1 
-    # 2 
-def exercise1():
-    for i in range(4):
-        print(i)
-# print(exercise1())
-
-x = ['a', 'b', 'c', 'd']
-# for i in x: 
-#     print(i) 
-
-# for i in range(len(x)): 
-#     print(i) 
-#     print(x[i])
-
-# def PermutationAny(x): 
-
-
-# def PremutationsRec(x):
-#     if len(x) == 1:
-#         return [x]
-    
-
-# print(PermutationsStr('ab'))
- 
-
+print(original_comb1(['ab', 'ba'], "c"))
