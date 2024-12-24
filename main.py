@@ -123,7 +123,7 @@ def Comb1(x, y):
     lst = []
     for i in x:
         for i in range(len(i) + 1):
-            lst += [x[:i] + y + x[i:]]
+            lst += x[:i] + y + x[i:]
     return lst 
 print(Comb1(['a'], 'b'))
 print(Comb1(['ab', 'ba'], "c"))
