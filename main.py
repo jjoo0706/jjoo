@@ -70,6 +70,14 @@ print(recursive_sum([1, 2, 3, 4, 5]))
 # ASSIGNED 1/19 
 # Using the permutation code below as a guide, do a first attempt at doing this code in a recursive way. 
 def permutation_generation(s): 
-    perm_list = [] 
-    for letter in s: 
+    perm_list = [s[0]] 
+    for i in range(1, len(s)): 
+        current_char = s[i] 
+        updated_list = [] 
         for perm in perm_list: 
+            for pos in range(len(perm)+1):
+                updated_list += [perm[:pos] + current_char + perm[pos:]]
+        perm_list = updated_list
+    return perm_list
+    
+print(permutation_generation('abc'))
