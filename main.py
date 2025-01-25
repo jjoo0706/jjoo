@@ -80,4 +80,85 @@ def permutation_generation(s):
         perm_list = updated_list
     return perm_list
     
-print(permutation_generation('abc'))
+# print(permutation_generation('abc'))
+
+def permutation_recursive(x):
+    if len(x) == 1:
+        return [x]
+    result = []
+    for i in range(len(x)):
+        character = x[i]
+        remain_char = x[:i] + x[1+i:]
+        permutations = permutation_recursive(remain_char)
+        for j in permutations:
+            result = result + [character + j]
+    return result
+
+# print(permutation_recursive('abc'))
+
+# ASSIGNED JAN 25 
+# fix option 0 
+def display_menu():
+    numbers = [45, 80, 10, 30, 27, 50, 5, 15]
+    new_list = []
+    while True:
+        print("Choose an option from 0-7")
+        print("0: Save a new list of numbers ")
+        print("1: View the Current list ")
+        print("2: View the first value ")
+        print("3: View the Last value ")
+        print("4: View the Average value")
+        print("5: View every other value")
+        print("6: Add a number to every value ")
+        print("7: Quit ")
+        option = (input("Input an option from 0-7"))
+        if option == "0":
+            new_list = []
+            print("Enter numbers for the new list. Type 'done' when finished")
+            while True:
+                value = input("Enter a number (or 'done' to finish)")
+                if value == 'done':
+                    break
+                numbers += (int(value))
+            print("New list saved! New list is: " + str(numbers))
+        elif option == "1":
+            print("Current list: " + str(numbers))
+        elif option == "2":
+            print("First value: " + str(numbers[0]))
+        elif option == "3":
+            print("Last value: " +str(numbers[7]))
+        elif option == "4":
+            average = sum(numbers) / len(numbers)
+            print("Average value: " + str(average))
+        elif option == "5":
+            print("Every other value: " + str(numbers[::2]))
+        elif option == "6":
+            value = input("Enter a number to add to each value in the list")
+            value = int(value)
+            new_numbers = []
+            for x in numbers:
+                new_numbers += [x + value]
+            numbers = new_numbers
+            print("Updated list: " + str(numbers))
+        elif option == "7":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid option. Please choose a number from 0-7")
+
+display_menu()
+
+
+    # [45, 80, 10, 30, 27, 50, 5, 15]
+    # "Asks me to input an option number "
+    # 0-8 
+    # 0 Save a new list of numbers 
+    # 1 View the Current list 
+    # 2 View the first value 
+    # 3 View the Last value 
+    # 4 View the Average value 
+    # 5 View every other value 
+    # 6 add some number to every value 
+    # 7 Quit 
+
+# Another code using the input function and also using nested loops 
