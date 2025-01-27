@@ -162,3 +162,5 @@ display_menu()
     # 7 Quit 
 
 # Another code using the input function and also using nested loops 
+
+# Write a function that takes in a string from user. If the string is longer than 20 characters, 
