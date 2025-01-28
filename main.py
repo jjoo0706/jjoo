@@ -163,4 +163,6 @@ display_menu()
 
 # Another code using the input function and also using nested loops 
 
-# Write a function that takes in a string from user. If the string is longer than 20 characters, 
+# Write a function that takes in a list of lists. Iterate through both the list and the lists of lists, and if the types is a string, then add it to a string that will create a sentence. If it's an integer, add it to the sum. 
+# [["hello", 10, 2], [15, "world"], ["today", "is", 53, "saturday"], [12, "!"]]
+# output: "hello world today is saturday" 92 
