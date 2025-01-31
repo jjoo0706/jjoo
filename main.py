@@ -119,8 +119,9 @@ def display_menu():
                 value = input("Enter a number (or 'done' to finish)")
                 if value == 'done':
                     break
-                numbers += (int(value))
-            print("New list saved! New list is: " + str(numbers))
+                new_list += [int(value)]
+            print("New list saved! New list is: " + str(new_list))
+            numbers = new_list
         elif option == "1":
             print("Current list: " + str(numbers))
         elif option == "2":
