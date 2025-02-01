@@ -167,3 +167,26 @@ display_menu()
 # Write a function that takes in a list of lists. Iterate through both the list and the lists of lists, and if the types is a string, then add it to a string that will create a sentence. If it's an integer, add it to the sum. 
 # [["hello", 10, 2], [15, "world"], ["today", "is", 53, "saturday"], [12, "!"]]
 # output: "hello world today is saturday" 92 
+
+def input(x):
+    sentence = ""
+    total_sum = 0
+    for i in x:
+        for j in i:
+            if type(item) == str:
+                sentence += " "
+                sentence += j
+            elif type(item) == int:
+                total_sum += j
+    return sentence, total_sum
+
+x = []
+num_lists = int(input("Enter the number of sublists: "))
+
+for i in range(num_lists):
+    sublist = []
+    num_items = int(input("Enter the number of items in sublist: "))
+    for j in range(num_items):
+        num = input("Enter item in sublist: 
+
+        
