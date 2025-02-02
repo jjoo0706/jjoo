@@ -1,27 +1,30 @@
-# Given a 2-D list, rotate the matrix 
+# list1 = [1,2,3] 
+# list2 = list1 
+# list1[1] = 1 
+# print(list2)
+# list2[2] = 1 
+# print(list1)
 
-# table = [[7, 4, 1]
-#          [5, 3, 2]
- #         [6, 9, 8]] 
+def mystery5(x): 
+	x = x* -1 
+	return x 
 
-# rotated = [[6, 5, 7]
-#             [9, 3, 4]
-#             [8, 2, 1]]
+def mystery6(l1, l2): 
+	l1[0] = 0
+	l2 = [1, 1]
 
-def rotate_matrix(x):
-    rows = len(x)
-    columns = len(x[0])
-    rotate = [[0] * rows for i in range(columns)]
-    for j in range(rows):
-        for k in range(columns):
-            rotate[k][rows - 1 - j] = x[j][k]
-    return rotate
+# x = 7 
+# vals = [7, 7] 
+# mystery5(x) 
+# mystery6(vals, vals) 
+# print(x, vals) 
 
-print(rotate_matrix([[7, 4, 1], [5, 3, 2], [6, 9, 8]]))
+# grid1 = [[1,2], [3,4], [5,6], [7,8]]
+# grid3 = grid1[:]
+# grid3[1][1] = 9 
+# print(grid1)
 
-# ASSIGNED 2/1/25 
-# Write a function that takes in a 2-D list, and sums up all the rows and then all the columns. The function will output two different integers at the end. 
-
-# Given a 2-D list, find the maximum element using loops. (Do not use the max() function)
-
-# Given a 2-D list, check if the matrix is symmetric. This means matrix[i][j] == matrix[j][i] 
+# ASSIGNED 2/8/25 
+# Try to write a code that will deep copy a 2-D list. 
+# This is possible to do with the tools that we learned in lesson. 
+# Don't use built in tools that you might find online. 
