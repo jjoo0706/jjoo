@@ -18,3 +18,10 @@ def rotate_matrix(x):
     return rotate
 
 print(rotate_matrix([[7, 4, 1], [5, 3, 2], [6, 9, 8]]))
+
+# ASSIGNED 2/1/25 
+# Write a function that takes in a 2-D list, and sums up all the rows and then all the columns. The function will output two different integers at the end. 
+
+# Given a 2-D list, find the maximum element using loops. (Do not use the max() function)
+
+# Given a 2-D list, check if the matrix is symmetric. This means matrix[i][j] == matrix[j][i] 
