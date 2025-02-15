@@ -28,3 +28,11 @@ def mystery6(l1, l2):
 # Try to write a code that will deep copy a 2-D list. 
 # This is possible to do with the tools that we learned in lesson. 
 # Don't use built in tools that you might find online. 
+
+def deep_copy(x):
+	list = []
+	for i in x:
+		row = i[:]
+		list += [row]
+	return list
+
