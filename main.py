@@ -1,38 +1,71 @@
-# list1 = [1,2,3] 
-# list2 = list1 
-# list1[1] = 1 
-# print(list2)
-# list2[2] = 1 
-# print(list1)
+a = ['Alice', 'red', 'apple'] 
+b = ['Bob', 'blue', 'banana'] 
+c = ['Charlie', 'blue', 'apple'] 
+d = ['David', 'blue', 'pear']
 
-def mystery5(x): 
-	x = x* -1 
-	return x 
+# # There is 1 red. 
+# # There is 3 blue. 
+# # There are 2 apple.
+# # There is 1 banana. 
+# # There is 1 pear.  
 
-def mystery6(l1, l2): 
-	l1[0] = 0
-	l2 = [1, 1]
+# def counter(x):
+# 	# The list will always be in the same order: name, color, fruit. 
+# 	counternumF = 0
+# 	counternumC = 0
+# 	fruit_counter = []
+# 	color_counter = []
+# 	fruits = ["apple", "banana", "pear"]
+# 	color = ["red", "blue"]
+# 	for i in x:
+# 		for x in i[1:]:
+# 			if x in fruits:
+# 				if x in fruit_counter:
+# 					counternumF += 1
+# 				else:
+# 					fruit_counter = [x]
+# 					counternumF = 1
+# 			elif x in color:
+# 				if x in color_counter:
+# 					counternumC += 1
+# 				else:
+# 					color_counter = [x]
+# 					counternumC = 1
+# 	for fruits in fruit_counter:
+# 		print(fruits, counternumF)
+# 	for color in color_counter:
+# 		print(color, counternumC)
+# data = [a, b, c, d]
+# print(counter(data))
 
-# x = 7 
-# vals = [7, 7] 
-# mystery5(x) 
-# mystery6(vals, vals) 
-# print(x, vals) 
+# d = {'apple': [1,2,3]}
+# print(d['apple'])
+# d['apple'] = 3 
+# print(d['apple'])
 
-# grid1 = [[1,2], [3,4], [5,6], [7,8]]
-# grid3 = grid1[:]
-# grid3[1][1] = 9 
-# print(grid1)
+fruit = {} 
+color = {} 
+for l in [a, b, c, d]: 
+	for ind in range(len(l)): 
+		if ind == 1: 
+			current_color = l[ind]
+			if current_color in color: 
+				color[current_color] += 1 
+			else: 
+				color[current_color] = 1 
+		elif ind == 2: 
+			current_fruit = l[ind]
+			if current_fruit in fruit: 
+				fruit[current_fruit] += 1 
+			else: 
+				fruit[current_fruit] = 1 
+print(fruit)
+print(color)
 
-# ASSIGNED 2/8/25 
-# Try to write a code that will deep copy a 2-D list. 
-# This is possible to do with the tools that we learned in lesson. 
-# Don't use built in tools that you might find online. 
+for i in fruit: 
+	print("There are", fruit[i], i)
+for i in color: 
+	print("There are", color[i], i)
 
-def deep_copy(x):
-	list = []
-	for i in x:
-		row = i[:]
-		list += [row]
-	return list
-
+# I'll write up a more detailed description of dictionaries. 
+# Based off of the write up, I want you to try to do some easy exercises on dictionaries, which I'll include as homework. 
