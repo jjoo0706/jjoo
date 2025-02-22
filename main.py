@@ -80,3 +80,10 @@ def word_frequency():
 	return counter
 
 print(word_frequency())
+
+# ASSIGNED 2/22/25
+# Write a function that will use the information in hw1.txt to interact with the user. 
+# The function will first ask the user to input the information they want (Age, Email). 
+# Then the function will ask for the name. 
+# If the name does not exist in the file, the code will ask if they want to add a new person to the file. 
+# When the user is done and the code quits, the function will print out all the information that was stored. 
