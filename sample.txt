@@ -1,0 +1,4 @@
+Hello, this is a sample text file.
+You can use this file to practice reading line by line.
+Python makes file handling easy and efficient.
+Happy coding!
