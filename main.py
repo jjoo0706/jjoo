@@ -79,7 +79,7 @@ def word_frequency():
 		counter[word] = 1
 	return counter
 
-print(word_frequency())
+# print(word_frequency())
 
 # ASSIGNED 2/22/25
 # Write a function that will use the information in hw1.txt to interact with the user. 
@@ -88,8 +88,13 @@ print(word_frequency())
 # If the name does not exist in the file, the code will ask if they want to add a new person to the file. 
 # When the user is done and the code quits, the function will print out all the information that was stored. 
 
+# Continued 3/1 
+# Add a option for the user to add a new name, new age, and new email 
+# After the user is done, write the NEW dictionary to a NEW file. 
+
 def hw1():
-	filename = "hw.txt"
+	filename = 'hw1.txt'
+	new_filename = 'new_hw1.txt'
 	data = {}
 	x = open(filename, 'r')
 	for i in x:
@@ -104,28 +109,33 @@ def hw1():
 				name += j
 			elif counter == 1:
 				age += j
-			else:
+			elif counter == 2 and j != "\n":
 				email += j
 		data[name] = (age, email)
 	while True:
-		info = input("Get Age or Email? Type 'quit' to exit: ")
+		info = input("Get 'Age', 'Email', or 'Add' new person? Type 'quit' to exit: ")
 		if info == "quit":
 			break
-		name = input("Enter name: ")
-		if name in data:
-			info = data[name]
-			if info == "age":
-				print(name + "'s Age: " + info[0])
-			else:
-				print(name + "'s Email: " + info[1])
+		if info == "Add":
+			new_name = input("Enter new name: ")
+			new_age = input("Enter new age: ")
+			new_email = input("Enter new email: ")
+			data[new_name] = (new_age, new_email)
 		else:
-			add = input(name + " not found. Add new person? Type 'yes' or 'no': ")
-			if add == "yes":
-				age = input("Enter Age: ")
-				email = input("Enter Email: ")
-				data[name] = (age, email)
-
+			name = input("Enter name: ")
+			if name in data:
+				if info == "Age":
+					print(name + "'s Age: " + data[name][0])
+				else:
+					print(name + "'s Email: " + data[name][1])
+			else:
+				print(name + " not found.")	
+	new_file = open(new_filename, 'w')
+	# Write all the info in one line, separated by a commma, and then for a new person, write a new line using the '\n'
 	for name in data:
-		print(name, "-Age:", data[name][0], "Email:", data[name][1])
+		new_file.write(name + "," + data[name][0] + "," + data[name][1] + "\n")
+	new_file.close()
+	print(data)
+	x.close() 
 
 print(hw1())
