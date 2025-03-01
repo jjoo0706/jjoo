@@ -87,3 +87,45 @@ print(word_frequency())
 # Then the function will ask for the name. 
 # If the name does not exist in the file, the code will ask if they want to add a new person to the file. 
 # When the user is done and the code quits, the function will print out all the information that was stored. 
+
+def hw1():
+	filename = "hw.txt"
+	data = {}
+	x = open(filename, 'r')
+	for i in x:
+		name = ""
+		age = ""
+		email = ""
+		counter = 0
+		for j in i:
+			if j == ",":
+				counter += 1
+			elif counter == 0:
+				name += j
+			elif counter == 1:
+				age += j
+			else:
+				email += j
+		data[name] = (age, email)
+	while True:
+		info = input("Get Age or Email? Type 'quit' to exit: ")
+		if info == "quit":
+			break
+		name = input("Enter name: ")
+		if name in data:
+			info = data[name]
+			if info == "age":
+				print(name + "'s Age: " + info[0])
+			else:
+				print(name + "'s Email: " + info[1])
+		else:
+			add = input(name + " not found. Add new person? Type 'yes' or 'no': ")
+			if add == "yes":
+				age = input("Enter Age: ")
+				email = input("Enter Email: ")
+				data[name] = (age, email)
+
+	for name in data:
+		print(name, "-Age:", data[name][0], "Email:", data[name][1])
+
+print(hw1())
