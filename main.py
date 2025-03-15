@@ -1,141 +1,56 @@
-students = [['Alice', 90], ['Bob', 87], ['Charlie', 92], ['David', 84], ['Eric', 95], ['Frank', 80]]
+# Write a function that will take in a text file from the user. 
+# Give the user the following options: 
+# 1) Return the entire file 
+# 2) Return the longest string in the file 
+# 3) Create a new file 
+# input()
 
-# First, create a dictionary of the students' names and grades 
+# s = "Hello my name is Python"
+# def longest_word(x):
+# 	longest = ""
+# 	word = ""
+# 	for i in x:
+# 		if i != " ":
+# 			word += i
+# 		else:
+# 			if len(word) > len(longest):
+# 				longest = word
+# 			word = ""
+# 	if len(word) > len(longest):
+# 		longest = word
+# 	else:
+# 		longest = longest
+# 	return longest
 
-def student_dict():
-	student = {}
-	for i in students:
-		name = i[0]
-		grade = i[1]
-		student[name] = grade
-	return student
+# def processfile():
+# 	filename = input("Enter the filename: ")
+# 	file = open(filename, 'r')
+# 	fileInfo = file.read()
+# 	file.close()
+# 	print("Choose an option")
+# 	print("#1. Return the entire file")
+# 	print("#2. Return the longest string in the file")
+# 	print("#3. Create a new file")
+# 	option = input("Enter the option 1, 2, or 3: ")
+# 	if option == '1':
+# 		print(fileInfo)
+# 	elif option == '2':
+# 		print(longest_word(fileInfo))
+# 	elif option == '3':
+# 		new_filename = input("Enter the new filename: ")
+# 		new_fileInfo = input("Enter information for the new file: ")
+# 		new_file = open(new_filename, 'w')
+# 		new_file.write(new_fileInfo)
+# 		new_file.close()
+# 		print("New file created.")
+# 	else:
+# 		print("Invalid choice, please try again.")
 
-sd = student_dict() 
+# print(processfile())
 
-# Create a function that takes in a student's name and asks for input for the updated grade
-# If the student hasn't been added to the dictionary yet, make sure the function can add them and their grade to the dictionary  
-
-def grade_update(x, name):
-	if name in x:
-		new_grade = int(input("Enter the new grade: "))
-		x[name] = new_grade
-		print("Grade updated. The student's grade is now " + str(new_grade))
-	else:
-		new_grade = int(input("That student is not in the gradebook. Enter their grade to add them: "))
-		x[name] = new_grade
-		print("Student added!. The student's grade is now " + str(new_grade))
-	
-# print(sd)
-# print(grade_update(sd, 'Daniel'))
-# print(sd)
-
-# Write a function that counts the number of occurrences of each word in a string. 
-
-text = "apple banana apple orange banana apple orange orange"
-
-def word(x):
-	counter = {}
-	word = ""
-	for i in x:
-		if i != " ":
-			word += i
-		else:
-			if word in counter:
-				counter[word] += 1
-			else:
-				counter[word] = 1
-			word = ""
-	if word in counter:
-		counter[word] += 1
-	else:
-		counter[word] = 1
-	return counter
+# 'w' will erase the entire file and write the thing you want 
+# 'a' will Append to the existing file 
+with open('file.txt', 'a') as f: 
+	f.write("\nHello World")
 
 
-f = open('sample.txt', 'r')
-# print(f.read())
-
-# Using this, keep a counter of the frequency of words. 
-for line in f: 
-	print(line)
-
-def word_frequency():
-	f = open('sample.txt', 'r')
-	counter = {}
-	word = ""
-	for i in f:
-		for j in i:
-			if j != " " and j != "\n":
-				word += j
-			else:
-				if word in counter:
-					counter[word] += 1
-				else:
-					counter[word] = 1
-				word = ""
-	if word in counter:
-		counter[word] += 1
-	else:
-		counter[word] = 1
-	return counter
-
-# print(word_frequency())
-
-# ASSIGNED 2/22/25
-# Write a function that will use the information in hw1.txt to interact with the user. 
-# The function will first ask the user to input the information they want (Age, Email). 
-# Then the function will ask for the name. 
-# If the name does not exist in the file, the code will ask if they want to add a new person to the file. 
-# When the user is done and the code quits, the function will print out all the information that was stored. 
-
-# Continued 3/1 
-# Add a option for the user to add a new name, new age, and new email 
-# After the user is done, write the NEW dictionary to a NEW file. 
-
-def hw1():
-	filename = 'hw1.txt'
-	new_filename = 'new_hw1.txt'
-	data = {}
-	x = open(filename, 'r')
-	for i in x:
-		name = ""
-		age = ""
-		email = ""
-		counter = 0
-		for j in i:
-			if j == ",":
-				counter += 1
-			elif counter == 0:
-				name += j
-			elif counter == 1:
-				age += j
-			elif counter == 2 and j != "\n":
-				email += j
-		data[name] = (age, email)
-	while True:
-		info = input("Get 'Age', 'Email', or 'Add' new person? Type 'quit' to exit: ")
-		if info == "quit":
-			break
-		if info == "Add":
-			new_name = input("Enter new name: ")
-			new_age = input("Enter new age: ")
-			new_email = input("Enter new email: ")
-			data[new_name] = (new_age, new_email)
-		else:
-			name = input("Enter name: ")
-			if name in data:
-				if info == "Age":
-					print(name + "'s Age: " + data[name][0])
-				else:
-					print(name + "'s Email: " + data[name][1])
-			else:
-				print(name + " not found.")	
-	new_file = open(new_filename, 'w')
-	# Write all the info in one line, separated by a commma, and then for a new person, write a new line using the '\n'
-	for name in data:
-		new_file.write(name + "," + data[name][0] + "," + data[name][1] + "\n")
-	new_file.close()
-	print(data)
-	x.close() 
-
-print(hw1())
