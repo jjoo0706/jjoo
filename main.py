@@ -183,3 +183,7 @@ def name_checker(i1, i2, i3, i4):
     return result
 
 # print(name_checker(p1, p2, p3, p4))
+
+# Write a function that will read info.txt and create Person objects if a Person object doesn't exist for this person. 
+
+# Create an object called Email, which has the attributes sender, receiver, date sent, and content. 
