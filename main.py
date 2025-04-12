@@ -85,19 +85,35 @@ p4 = Person('Charlie', 'bob@example.com', 1999)
 # Try to be creative about the way that you do things! Use lists, use new variables, use dictionaries! 
 
 # Write a function that identifies duplicates
-def duplicates(e1, e2, e3, e4):
-    inputs = [e1, e2, e3, e4]
+def duplicates(i1, i2, i3, i4):
+    inputs = [i1, i2, i3, i4]
     dupe = []
     for i in range(len(inputs)):
         for j in range (i+1, len(inputs)):
             for k in range(3):
-                if input[i][]
+                if inputs[i][k]== inputs[j][k]:
+                    dupe = dupe + [(inputs[i][k])]
+    return dupe
 # Write a function will categorize the people in order of age 
-def order_of_age(e1, e2, e3, e4):
-    inputs = [e1,e2,e3,e4]
+def order_of_age(i1, i2, i3, i4):
+    inputs = [i1, i2, i3, i4]
     for i in range(len(inputs)):
         for j in range(len(inputs) - 1):
-            if 
+            if inputs[j][2] > inputs[j+1][2]:
+                temp = inputs[j]
+                inputs[j] = inputs[j+1]
+                inputs[j+1] = temp
+    return inputs
 # Write a function that will identify if the name of the person is different, but the email address is the same. 
-
-
+def name_checker(i1, i2, i3, i4):
+    inputs = [i1, i2, i3, i4]
+    result = []
+    for i in range(len(inputs)):
+        for j in range(i+1, len(inputs)):
+            name1 = inputs[i][0]
+            name2 = inputs[j][0]
+            email1 = inputs[i][1]
+            email2 = inputs[j][1]
+            if email1 == email2 and name1 != name2:
+                result = result + [(email1)]
+    return result
