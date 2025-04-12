@@ -169,21 +169,35 @@ print(order_of_age(lp))
 
 # ASSIGNED APRIL 12: FIX NAME CHECKER, AND DO MORE FUNCTIONS
 # Write a function that will identify if the name of the person is different, but the email address is the same. 
-def name_checker(i1, i2, i3, i4):
-    inputs = [i1, i2, i3, i4]
+def name_checker(lst_people):
     result = []
-    for i in range(len(inputs)):
-        for j in range(i+1, len(inputs)):
-            name1 = inputs[i][0]
-            name2 = inputs[j][0]
-            email1 = inputs[i][1]
-            email2 = inputs[j][1]
-            if email1 == email2 and name1 != name2:
-                result = result + [(email1)]
+    for i in range(len(lst_people)):
+        for j in range(i + 1, len(lst_people)):
+            if lst_people[i].email == lst_people[j].email and lst_people[i].name != lst_people[j].name:
+                result += [lst_people[i], lst_people[j]]
     return result
-
-# print(name_checker(p1, p2, p3, p4))
+print(name_checker(lp))
 
 # Write a function that will read info.txt and create Person objects if a Person object doesn't exist for this person. 
+def read_people(filename):
+    people = []
+    file = open(filename, 'r')
+    for i in file:
+        info = i.split(',')
+        name = info[0]
+        email = info[1]
+        birth_year = int(info[2])
+        new_person = Person(name, email, birth_year)
+        for person in people:
+            if new_person != person:
+                people += [new_person]
+    file.close
+    return people
 
 # Create an object called Email, which has the attributes sender, receiver, date sent, and content. 
+class Email:
+    def __init__(self, sender, receiver, date_sent, content):
+        self.sender = sender
+        self.receiver = receiver
+        self.date_sent = date_sent
+        self.content = content
