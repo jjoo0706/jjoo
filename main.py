@@ -249,8 +249,8 @@ def send_email(sender, receiver):
 # email_alice_bob should be an Email object 
 email_alice_bob = send_email(people[0], people[1])
 # print(send_email(people[0], people[1]))
-print(email_alice_bob.display())
-print(email_alice_bob.display())
+print(email_alice_bob)
+print(email_alice_bob)
 
 
 
