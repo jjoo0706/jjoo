@@ -46,6 +46,11 @@ class Rectangle:
 r1 = Rectangle(80, 40)
 r2 = Rectangle(80, 40)
 # print(r1)
+# print(r1.width)
+# print(r1.height)
+# r1.scale(10) 
+# print(r1.width)
+# print(r1.height)
 
 # ASSIGNED APR 1 
 # Make a new class called Person 
@@ -84,9 +89,9 @@ p4 = Person('Charlie', 'bob@example.com', 2000)
 p5 = Person('Charlie', 'bob@example.com', 2000)
 p6 = Person('Charlie', 'bob@example.com', 2000)
 
-print(p1 == p2)
-print(p1 == p3)
-print(p1.calc_age())
+# print(p1 == p2)
+# print(p1 == p3)
+# print(p1.calc_age())
 
 # Work on the below for homework. 
 # Try to be creative about the way that you do things! Use lists, use new variables, use dictionaries! 
@@ -165,7 +170,7 @@ def order_of_age(lst_people):
                 lst_people[j+1] = temp
     return lst_people
 
-print(order_of_age(lp))
+# print("order of age", order_of_age(lp))
 
 # ASSIGNED APRIL 12: FIX NAME CHECKER, AND DO MORE FUNCTIONS
 # Write a function that will identify if the name of the person is different, but the email address is the same. 
@@ -176,28 +181,86 @@ def name_checker(lst_people):
             if lst_people[i].email == lst_people[j].email and lst_people[i].name != lst_people[j].name:
                 result += [lst_people[i], lst_people[j]]
     return result
-print(name_checker(lp))
+# print(name_checker(lp))
 
 # Write a function that will read info.txt and create Person objects if a Person object doesn't exist for this person. 
 def read_people(filename):
     people = []
     file = open(filename, 'r')
+    num = 0
     for i in file:
+        num += 1
         info = i.split(',')
-        name = info[0]
-        email = info[1]
-        birth_year = int(info[2])
-        new_person = Person(name, email, birth_year)
-        for person in people:
-            if new_person != person:
+        if num > 1:
+            name = info[0]
+            birth_year = info[1]
+            email = info[2]
+            if email[0] == " ":
+                email = email[1:]
+            email = email[:-1]
+            new_person = Person(name, email, birth_year)
+            counter = 0
+            for person in people:
+                if new_person == person:
+                    counter += 1
+            if counter == 0:
                 people += [new_person]
     file.close
     return people
 
+people = read_people("info.txt")
+s = " george@example.com\n"
+# print(s[:19])
+
 # Create an object called Email, which has the attributes sender, receiver, date sent, and content. 
 class Email:
-    def __init__(self, sender, receiver, date_sent, content):
+    def __init__(self, sender, receiver):
         self.sender = sender
         self.receiver = receiver
-        self.date_sent = date_sent
-        self.content = content
+        self.date_sent = None
+        self.content = None
+    
+    def display(self):
+        print("Sender: " + self.sender.name + " (" + self.sender.email + ")")
+        print("Receiver: " + self.receiver.name + " (" + self.receiver.email + ")")
+
+# You can include new methods, new attributes, and you can either require inputs for everything or do user inputs. 
+
+# Write a function that takes as input a sender and a receiver from the list people, and writes an email. It will include the sender, receiver, date sent, and the content. When you print out the email it should look as follows: 
+# Sender: Alice (alice@example.com)
+# Receiver: Bob (bob@example.com)
+# Date Sent: 4/24/25
+# Content: Today is Thursday. 
+
+# Consider writing a method that will update your attributes! Use that method to update the attributes in this function. 
+# The function should return an Email object. When the Email object is printed, it should print out all the attributes. 
+# ASSIGNED APR 24: Just focus on send_email! If you have time try doing the other functions, but let's focus on this one for now. 
+def send_email(sender, receiver):   
+    content = input("Type your message: ")
+    email = Email(sender, receiver)
+    email.display()
+    print("Date Sent: 4/24/25")
+    return content
+
+# email_alice_bob should be an Email object 
+email_alice_bob = send_email(people[0], people[1])
+# print(send_email(people[0], people[1]))
+print(email_alice_bob)
+
+print(email_alice_bob)
+
+
+
+# Given a email object, write a function that will allow the receiver to respond to the initial email. 
+# def respond(Email_Object)
+# Sender: Bob (bob@example.com)
+# Receiver: Alice (alice@example.com)
+# Date sent: 4/25/25 
+# Content: Hello Alice! 
+
+# Given an email object, write a function that will forward the email to a new recipient. 
+# Sender: Alice (alice@example.com)
+# Receiver: Charlie (charlie@example.com)
+# Date sent: 4/25/25
+# Content: Fwd: Hello Alice! 
+
