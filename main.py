@@ -219,6 +219,7 @@ class Email:
         self.receiver = receiver
         self.date_sent = None
         self.content = None
+    de
     
     def display(self):
         print("Sender: " + self.sender.name + " (" + self.sender.email + ")")
