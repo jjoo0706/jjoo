@@ -219,12 +219,15 @@ class Email:
         self.receiver = receiver
         self.date_sent = None
         self.content = None
-    de
+    def update_info(self, date_sent, content):
+        self.date_sent = date_sent
+        self.content = content
     
     def display(self):
         print("Sender: " + self.sender.name + " (" + self.sender.email + ")")
         print("Receiver: " + self.receiver.name + " (" + self.receiver.email + ")")
-
+        print("Date Sent: " + self.date_sent)
+        print("Content: " + self.content)
 # You can include new methods, new attributes, and you can either require inputs for everything or do user inputs. 
 
 # Write a function that takes as input a sender and a receiver from the list people, and writes an email. It will include the sender, receiver, date sent, and the content. When you print out the email it should look as follows: 
@@ -238,17 +241,17 @@ class Email:
 # ASSIGNED APR 24: Just focus on send_email! If you have time try doing the other functions, but let's focus on this one for now. 
 def send_email(sender, receiver):   
     content = input("Type your message: ")
-    email = Email(sender, receiver)
-    email.display()
-    print("Date Sent: 4/24/25")
-    return content
+    date_sent = "4/24/25"
+    email1 = Email(sender, receiver)
+    email1.update_info(date_sent, content)
+    return email1
 
 # email_alice_bob should be an Email object 
 email_alice_bob = send_email(people[0], people[1])
 # print(send_email(people[0], people[1]))
-print(email_alice_bob)
+print(email_alice_bob.display())
+print(email_alice_bob.display())
 
-print(email_alice_bob)
 
 
 
