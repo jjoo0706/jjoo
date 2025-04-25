@@ -213,18 +213,30 @@ s = " george@example.com\n"
 # print(s[:19])
 
 # Create an object called Email, which has the attributes sender, receiver, date sent, and content. 
+# Is the email being forwarded? 
+# Can you keep track of the email being forwarded elsewhere? 
 class Email:
     def __init__(self, sender, receiver):
         self.sender = sender
         self.receiver = receiver
         self.date_sent = None
         self.content = None
-    def update_info(self, date_sent, content):
+        self.forward = False
+        self.old_receiver = None
+    def update_date(self, date_sent):
         self.date_sent = date_sent
+    def update_content(self, content):
         self.content = content
-    
+    def foward_true(self, new_receiver): 
+        self.forward = True 
+        self.old_receiver = self.receiver
+        self.receiver = new_receiver
     def __str__(self):
-        return ("Sender: " + self.sender.name + " (" + self.sender.email + ")" + "\n" + "Receiver: " + self.receiver.name + " (" + self.receiver.email + ")" + "\n" + "Date Sent: " + self.date_sent + "\n" + "Content: " + self.content)
+        if self.forward == True: 
+            text = ("Sender: " + self.sender.name + " (" + self.sender.email + ")" + "\n" + "Receiver: " + self.receiver.name + " (" + self.receiver.email + ")" + "\n" + "Past Receiver: " + self.old_receiver.email + "\n" + "Date Sent: " + self.date_sent + "\n" + "Content: FWD:" + self.content)
+        else: 
+            text = ("Sender: " + self.sender.name + " (" + self.sender.email + ")" + "\n" + "Receiver: " + self.receiver.name + " (" + self.receiver.email + "), " +  "\n" + "Date Sent: " + self.date_sent + "\n" + "Content: " + self.content)
+        return text
 # You can include new methods, new attributes, and you can either require inputs for everything or do user inputs. 
 
 # Write a function that takes as input a sender and a receiver from the list people, and writes an email. It will include the sender, receiver, date sent, and the content. When you print out the email it should look as follows: 
@@ -238,22 +250,29 @@ class Email:
 # ASSIGNED APR 24: Just focus on send_email! If you have time try doing the other functions, but let's focus on this one for now. 
 def send_email(sender, receiver):   
     content = input("Type your message: ")
-    date_sent = "4/24/25"
+    date_sent = "4/26/25"
     email1 = Email(sender, receiver)
-    email1.update_info(date_sent, content)
+    email1.update_date(date_sent)
+    email1.update_content(content)
     return email1
 
 # email_alice_bob should be an Email object 
 email_alice_bob = send_email(people[0], people[1])
 # print(send_email(people[0], people[1]))
 print(email_alice_bob)
-print(email_alice_bob)
-
-
-
+# print(email_alice_bob)
 
 # Given a email object, write a function that will allow the receiver to respond to the initial email. 
-# def respond(Email_Object)
+def respond(Email_Object):
+    content = input("Type your message: ")
+    date_sent = "4/27/25"
+    response_email = Email(Email_Object.receiver, Email_Object.sender)
+    response_email.update_date(date_sent)
+    response_email.update_content(content)
+    return response_email
+
+email_bob_response = respond(email_alice_bob)
+print(email_bob_response)
 # Sender: Bob (bob@example.com)
 # Receiver: Alice (alice@example.com)
 # Date sent: 4/25/25 
@@ -265,3 +284,18 @@ print(email_alice_bob)
 # Date sent: 4/25/25
 # Content: Fwd: Hello Alice! 
 
+# def forward(Email_Object, new_recipient):
+#     content = Email_Object.content
+#     date_sent = "4/28/25"
+#     fwd_email = Email(Email_Object.sender, new_recipient)
+#     fwd_email.update_date(date_sent)
+#     fwd_email.update_content(content)
+#     return fwd_email
+
+def forward(Email_Object, new_recipient):
+    Email_Object.foward_true(new_recipient)
+    Email_Object.update_date("4/18/25")
+    return Email_Object
+
+email_fwd = forward(email_bob_response, people[2])
+print(email_fwd)
