@@ -223,11 +223,8 @@ class Email:
         self.date_sent = date_sent
         self.content = content
     
-    def display(self):
-        print("Sender: " + self.sender.name + " (" + self.sender.email + ")")
-        print("Receiver: " + self.receiver.name + " (" + self.receiver.email + ")")
-        print("Date Sent: " + self.date_sent)
-        print("Content: " + self.content)
+    def __str__(self):
+        return ("Sender: " + self.sender.name + " (" + self.sender.email + ")" + "\n" + "Receiver: " + self.receiver.name + " (" + self.receiver.email + ")" + "\n" + "Date Sent: " + self.date_sent + "\n" + "Content: " + self.content)
 # You can include new methods, new attributes, and you can either require inputs for everything or do user inputs. 
 
 # Write a function that takes as input a sender and a receiver from the list people, and writes an email. It will include the sender, receiver, date sent, and the content. When you print out the email it should look as follows: 
