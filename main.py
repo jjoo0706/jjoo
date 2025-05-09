@@ -37,3 +37,23 @@ class date:
             if self.month > 12:
                 self.month = 1
                 self.day += 1
+    
+    def previous_day(self):
+        self.day -= 1
+        if self.day < 1:
+            self.month -= 1
+            if self.month  < 1:
+                self.month = 12
+                self.year -= 1
+            self.day = self.days_in_month(self.month, self.year)
+    
+    def move_date(self, days):
+        if days > 0:
+            for i in range(days):
+                self.advance_day()
+        elif days < 0:
+            for i in range(-days):
+                self.previous_day()
+    
+    def __str__(self):
+        return month_str + "/" + day_str + "/" + year_str
