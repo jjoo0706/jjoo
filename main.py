@@ -74,7 +74,25 @@ def next_word(filename):
             else:
                 if word != '':
                     words += [word.lower()]
+                    word = ''
         if word != '':
             words += [word.lower()]
-        first_word = words[0]
-        
+        if len(words) > 0:
+            first_word = words[0]
+            if '$' in counter:
+                counter['$'] += [first_word]
+            else:
+                counter['$'] = [first_word]
+            i = 0
+            while i < len(words) - 1:
+                k = words[i]
+                v = words [i + 1]
+                if k in counter:
+                    counter[k] += [v]
+                else:
+                    counter[k] = [v]
+                i += 1
+    file.close()
+    return counter
+
+print(next_word('sample.txt'))
