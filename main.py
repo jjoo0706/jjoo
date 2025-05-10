@@ -1,3 +1,5 @@
+import random
+
 # Refresher on Dictionaries 
 # {key: value}
 x = {"Jayden": "Python", "Julie": "Java"}
@@ -48,11 +50,11 @@ def word_counter(filename):
 
 freqs = (word_counter('romeoandjuliet.txt'))
 #print out how many times "Romeo" is in the text 
-print(freqs["romeo"])
+# print(freqs["romeo"])
 # print out how many times "love" is in the text 
-print(freqs["love"])
+# print(freqs["love"])
 # print out how many distinct words are in the text 
-print(len(freqs))
+# print(len(freqs))
 
 # END GOAL: Write a function that will generate new text! Markov Chain 
 
@@ -71,12 +73,14 @@ def next_word(filename):
         for j in i:
             if (65 <= ord(j) <= 90) or (97 <= ord(j) <= 122) or ord(j) == 39: 
                 word += j
+            elif ord(j) == 46:
+                word += '.'
             else:
                 if word != '':
-                    words += [word.lower()]
+                    words += [word]
                     word = ''
         if word != '':
-            words += [word.lower()]
+            words += [word]
         if len(words) > 0:
             first_word = words[0]
             if '$' in counter:
@@ -95,4 +99,36 @@ def next_word(filename):
     file.close()
     return counter
 
-print(next_word('sample.txt'))
+dct = (next_word('sample.txt'))
+# print(dct)
+# print(random.randint(0,1))
+
+# Write a function that will generate a text. 
+# Pick a random word that starts at the beginning of te sentence. 
+# Then pick another random word that follows that word, etc. 
+# How do you know when to end? 
+
+# Instead of max_words, do max_sentences 
+# we want it to look like a sentence -- so capitalize the first word and end the sentence in a period. 
+def generate_text(dct, max_sentences):
+    sentence = ''
+    counter = 0
+    while counter < max_sentences:
+        start = dct['$']
+        index = random.randrange(0, len(start))
+        current = start[index]
+        sentence += current
+        while current in dct and current[-1] != '.':
+            nxt = dct[current]
+            index = random.randrange(0, len(nxt))
+            current = nxt[index]
+            sentence = sentence + ' ' + current
+        sentence = sentence[0].upper() + sentence[1:]
+        if sentence[-1] != '.':
+            sentence = sentence + '. '
+        counter += 1
+    return sentence
+print(generate_text(dct, 3))
+
+# ASSIGNED MAY 17 
+# We'll do some more practice with the random package and dictionaries. 
