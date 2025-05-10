@@ -1,59 +1,80 @@
-# Homework: Write a class that will take in the month, day, year and will be the date. 
-# Write a method that will determine if the year is a leap year. 
-# Write a method that will advance the date by one day. 
-# Write a method that will move the date the the day before. 
-# Write a method that will move the date by a given input. 
+# Refresher on Dictionaries 
+# {key: value}
+x = {"Jayden": "Python", "Julie": "Java"}
+# print(x["Jayden"])
+# print(x["Julie"])
 
-class date:
-    def __init__(self, month, day, year):
-        self.month = month
-        self.day = day
-        self.year = year
+list_colors = ["red", "red", "blue", "green", "blue", "green", "red", "green"]
+# Using a dictionary, count the number of instances of each color. 
 
-    def is_leap_year(self):
-        if self.year % 4 == 0 and (self.year % 100 != 0 or self.year % 400 != 0):
-            return True
-
-    def days_in_month(self, month, year):
-        if month is None:
-            month = self.month
-        if year is None:
-            year = self.year
-        if month == 2:
-            if self.is_leap_year():
-                return 29
-            else:
-                return 28
-        elif month in [4, 6, 9, 11]:
-            return 30
+def color_counter():
+    counter = {}
+    for color in list_colors:
+        if color in counter:
+            counter[color] += 1
         else:
-            return 31
+            counter[color] = 1
+    return counter
+# print(color_counter())
 
-    def advance_day(self):
-        self.day += 1
-        if self.day > self.days_in_month():
-            self.day = 1
-            self.month += 1
-            if self.month > 12:
-                self.month = 1
-                self.day += 1
-    
-    def previous_day(self):
-        self.day -= 1
-        if self.day < 1:
-            self.month -= 1
-            if self.month  < 1:
-                self.month = 12
-                self.year -= 1
-            self.day = self.days_in_month(self.month, self.year)
-    
-    def move_date(self, days):
-        if days > 0:
-            for i in range(days):
-                self.advance_day()
-        elif days < 0:
-            for i in range(-days):
-                self.previous_day()
-    
-    def __str__(self):
-        return month_str + "/" + day_str + "/" + year_str
+# Write a function that reads a file and counts the instances of each word. 
+
+# include case sensitivity 
+def word_counter(filename):
+    counter = {}
+    file = open(filename, 'r')
+    for i in file:
+        word = ''
+        for j in i:
+            if (65 <= ord(j) <= 90) or (97 <= ord(j) <= 122) or ord(j) == 39: 
+                word += j
+            else:
+                if word != '':
+                    word1 = word.lower()
+                    if word1 in counter:
+                        counter[word1] += 1
+                    else:
+                        counter[word1] = 1
+                    word = ''
+        if word != '':
+            word1 = word.lower()
+            if word1 in counter:
+                counter[word1] += 1
+            else:
+                counter[word1] = 1
+            word = ''
+    file.close()
+    return counter
+
+freqs = (word_counter('romeoandjuliet.txt'))
+#print out how many times "Romeo" is in the text 
+print(freqs["romeo"])
+# print out how many times "love" is in the text 
+print(freqs["love"])
+# print out how many distinct words are in the text 
+print(len(freqs))
+
+# END GOAL: Write a function that will generate new text! Markov Chain 
+
+# ASSIGNED MAY 13 
+# Write a function that keeps track of the next word in a sentence. The key will be the first word, and the value will be the second word. If the word is in the beginning of the sentence, the key will be $. 
+# {"$": ["Python"], "Python": ["is"]}... 
+# test it on sample.txt 
+# Keep capitalized words! 
+
+def next_word(filename):
+    counter = {}
+    file = open(filename, 'r')
+    for i in file:
+        word = ''
+        words = []
+        for j in i:
+            if (65 <= ord(j) <= 90) or (97 <= ord(j) <= 122) or ord(j) == 39: 
+                word += j
+            else:
+                if word != '':
+                    words += [word.lower()]
+        if word != '':
+            words += [word.lower()]
+        first_word = words[0]
+        

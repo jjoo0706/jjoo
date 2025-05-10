@@ -1,4 +1,7 @@
-Hello, this is a sample text file.
-You can use this file to practice reading line by line.
-Python makes file handling easy and efficient.
-Happy coding!
+Python is fun. 
+Python is easy to learn. Many people say Python is the best language for beginners. 
+Learning Python can be fun, and fun projects make learning more enjoyable. 
+Python, Python, Python — it keeps showing up! When you start a Python project, the most important thing is to keep learning. 
+Learning Python takes time, but time spent on Python is rarely wasted. 
+Some say Python is simple, some say Python is powerful, and many say Python is both simple and powerful. 
+Fun, learning, and Python — that's the recipe!
