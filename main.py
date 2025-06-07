@@ -67,11 +67,32 @@ def deal_cards(x):
 
 print(deal_cards(5))
 
-# ASSIGNED MAY 7 
+# ASSIGNED MAY 27 
 # Deal multiple sets of cards. Specify number of cards to deal and the number of people that need a set of cards. 
+def deal(player, card):
+    used = [0] * 52
+    players = {}
+    p = 1
+    while p <= player:
+        i = 0
+        while i < card:
+            c = random.randint(0,51)
+            if used[c] == 0:
 
+        
 
 # Write a scoring function for the cards. 
-
+def score(card):
+    rank = card[0]
+    if rank == 'Jack':
+        return 11
+    if rank == 'Queen':
+        return 12
+    if rank == 'King':
+        return 13
+    if rank == 'Ace':
+        return 14
+    return int(rank)
 
 # Write a function that picks a random player and picks a random card from that player, and calculates the score of that card. 
+
