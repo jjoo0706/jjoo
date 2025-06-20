@@ -33,4 +33,58 @@ class Board:
             print(line)
             r += 1
         
-    def drop_piece
+    def drop_piece(self, row, col, piece):
+        r = self.rows - 1
+        while r >= 0:
+            if self.grid[r][col] == ' ':
+                self.grid[r][col] = piece
+                return True
+            r -= 1
+        return False
+
+    def full(self):
+        r = 0
+        while r < self.rows:
+            c = 0
+            while c < self.columns:
+                if self.grid[r][c] == ' ':
+                    return False
+                c += 1
+            r += 1
+        return True
+
+    def identify_win(self, piece):
+        r = 0
+        while r < self.rows:
+            c = 0
+            while c < self.columns - 3:
+                if self.grid[r][c] == piece and self.grid[r][c+1] == piece and self.grid[r][c+2] == piece and self.grid[r][c+3] == piece:
+                    return True
+                c += 1
+            r += 1
+        c = 0
+        while c < self.columns:
+            r = 0
+            while r < self.rows - 3:
+                if self.grid[r][c] == piece and self.grid[r+1][c] == piece and self.grid[r+2][c] == piece and self.grid[r+3][c] == piece:
+                    return True
+                r += 1
+            c += 1
+
+        r = 0
+        while r < self.rows - 3:
+            c = 0
+            while c < self.columns - 3:
+                if self.grid[r][c] == piece and self.grid[r+1][c+1] == piece and self.grid[r+2][c+2] == piece and self.grid[r+3][c+3] == piece:
+                    return True
+                c += 1
+            r += 1
+        r = 0
+        while r < self.rows:
+            c = 0
+            while c < self.columns - 3:
+                if self.grid[r][c] == piece and self.grid[r-1][c+1] == piece and self.grid[r-2][c+2] == piece and self.grid[r-3][c+3] == piece:
+                    return True
+                c += 1
+            r += 1
+        return False
