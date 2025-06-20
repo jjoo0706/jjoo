@@ -16,4 +16,21 @@ class Board:
         self.rows = 6
         self.columns = 7
         self.grid = []
-        for i in 
+        i = 0
+        while i < self.rows:
+            j = 0
+            row = [' '] * self.columns
+            self.grid += [row]
+            i += 1
+    def diplay(self):
+        row = 0
+        while row < self.rows:
+            line = '|'
+            column = 0
+            while column < self.columns:
+                line += self.grid[row][column] + '|'
+                column += 1
+            print(line)
+            r += 1
+        
+    def drop_piece
