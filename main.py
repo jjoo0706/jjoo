@@ -38,20 +38,9 @@ class Board:
         while r >= 0:
             if self.grid[r][col] == ' ':
                 self.grid[r][col] = piece
-                return True
+                return (r, col)
             r -= 1
-        return False
-
-    def full(self):
-        r = 0
-        while r < self.rows:
-            c = 0
-            while c < self.columns:
-                if self.grid[r][c] == ' ':
-                    return False
-                c += 1
-            r += 1
-        return True
+        return None
 
     # Is there a way to be more clever about this identify_win? 
     # At this point, we're checking the entire board every time we run identify_win 
@@ -108,20 +97,28 @@ def start_game():
         if piece == 'X':
             print("Player " + piece + "'s turn")
             col_input = input("Choose a col from 0-6")
-            col = int(col_input)
-            board.drop_piece(col, piece)
-            board.display()
-            if board.identify_win(piece) == True:
-                print("Player 1 wins!")
-                is_winner = True
+            if int(col_input) < 0 or int(col_input) > 6:
+                print("Please choose from column 0-6")
+                col_input = input("Choose a col from 0-6")
             else:
-                piece = "O"
+                col = int(col_input)
+                board.drop_piece(col, piece)
+                board.display()
+                if board.identify_win(piece) == True:
+                    print("Player 1 wins!")
+                    is_winner = True
+                else:
+                    piece = "O"
         elif piece == "O":
             print("Player " + piece + "'s turn")
             col_input = input("Choose a col from 0-6")
-            col = int(col_input)
-            board.drop_piece(col, piece)
-            board.display()
+            if int(col_input) < 0 or int(col_input) > 6:
+                print("Please choose from column 0-6")
+                col_input = input("Choose a col from 0-6")
+            else:
+                col = int(col_input)
+                board.drop_piece(col, piece)
+                board.display()
             if board.identify_win(piece) == True:
                 print("Player 2 wins!")
                 is_winner = True
