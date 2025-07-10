@@ -38,9 +38,20 @@ class Board:
         while r >= 0:
             if self.grid[r][col] == ' ':
                 self.grid[r][col] = piece
-                return (r, col)
+                return True
             r -= 1
-        return None
+        return False
+    
+    def full(self):
+        r = 0
+        while r < self.rows:
+            c = 0
+            while c < self.columns:
+                if self.grid[r][c] == ' ':
+                    return False
+                c += 1
+            r += 1
+        return True
 
     # Is there a way to be more clever about this identify_win? 
     # At this point, we're checking the entire board every time we run identify_win 
@@ -102,6 +113,8 @@ def start_game():
                 col_input = input("Choose a col from 0-6")
             else:
                 col = int(col_input)
+                if board.full() = True:
+                    
                 board.drop_piece(col, piece)
                 board.display()
                 if board.identify_win(piece) == True:
