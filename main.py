@@ -112,16 +112,17 @@ def start_game():
                 print("Please choose from column 0-6")
                 col_input = input("Choose a col from 0-6")
             else:
-                col = int(col_input)
-                if board.full() = True:
-                    
-                board.drop_piece(col, piece)
-                board.display()
-                if board.identify_win(piece) == True:
-                    print("Player 1 wins!")
-                    is_winner = True
+                col = int(col_input)            
+                position = board.drop_piece(col, piece)
+                if position == False:
+                    print("Column is full. Try a different one!")
                 else:
-                    piece = "O"
+                    board.display()
+                    if board.identify_win(piece) == True:
+                        print("Player 1 wins!")
+                        is_winner = True
+                    else:
+                        piece = "O"
         elif piece == "O":
             print("Player " + piece + "'s turn")
             col_input = input("Choose a col from 0-6")
@@ -130,13 +131,18 @@ def start_game():
                 col_input = input("Choose a col from 0-6")
             else:
                 col = int(col_input)
-                board.drop_piece(col, piece)
-                board.display()
-            if board.identify_win(piece) == True:
-                print("Player 2 wins!")
-                is_winner = True
-            else:
-                piece = "X"
+                position = board.drop_piece(col, piece)
+                if position == False:
+                    print("Column is full. Try a different one!")
+                else:
+                    board.display()
+                    if board.identify_win(piece) == True:
+                        print("Player 2 wins!")
+                        is_winner = True
+                    else:
+                        piece = "X"
+        if board.full():
+            print("It is a tie! Restart to play again.")
 start_game()
 
 # ASSIGNED JULY 2: play your own game a couple of times and see if there's any edge cases that don't work. Some examples include try hitting the edge of board; does it work as expected. Filling a column and trying to put down a piece; does it give you an error? The goal of this is to try to stress test your own code and identify if it runs as expected or if there's any errors. 
