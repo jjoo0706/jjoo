@@ -22,6 +22,8 @@ class Board:
             row = [' '] * self.columns
             self.grid += [row]
             i += 1
+        self.piece_counts = {"X": 0, "O": 0}
+        self.last_move = None
     def display(self):
         row = 0
         while row < self.rows:
@@ -38,10 +40,23 @@ class Board:
         while r >= 0:
             if self.grid[r][col] == ' ':
                 self.grid[r][col] = piece
+                self.piece_counts[piece] += 1
+                print("drop_piece, (r, col)", (r, col))
+                self.last_move = (self.rows - 1 - r, col)
                 return True
             r -= 1
         return False
     
+    def count_direction(self, row, col, piece, r_move, c_move):
+        count = 0
+        r = r_move
+        c = c_move
+        while 0 <= r < self.rows and 0 <= c < self.columns and self.grid[r][c] == piece:
+            count += 1
+            r += r_move
+            c += c_move
+        return count
+
     def full(self):
         r = 0
         while r < self.rows:
@@ -57,6 +72,10 @@ class Board:
     # At this point, we're checking the entire board every time we run identify_win 
     # Is there a way to make it so that we're not checking the entire board every single time? 
     # ASSIGNED JULY 2: try to think about a way to do this that prevents checking the entire board every single time 
+    # When will there absolutely not be a win? 
+    # when a spot is empty 
+    # When there's been less than four moves, then there's definitely not going to be a win. 
+    # Maybe do a point system? 
     def identify_win(self, piece):
         # Check horizontal win 
         r = 0
@@ -97,6 +116,27 @@ class Board:
         
         return False
 
+    def identify_win1(self, piece):
+        if self.piece_counts[piece] < 3 or self.last_move is None:
+            return False
+        row = self.last_move[0]
+        print("last_move", self.last_move)
+        print("row", row)
+        col = self.last_move[1]
+        print("col", col)
+        directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+        i = 0
+        while i < len(directions):
+            dr = directions[i][0]
+            dc = directions[i][1]
+            count = 1
+            count += self.count_direction(row, col, piece, dr, dc)
+            count += self.count_direction(row, col, piece, -dr, -dc)
+            if count >= 4:
+                return True
+            i += 1
+        return False
+
 # Write a function that will start the Connect 4 Game using the Connect 4 object. 
 
 def start_game():
@@ -105,6 +145,7 @@ def start_game():
     piece = 'X'
     board.display()
     while not is_winner:
+        print("Piece counts", board.piece_counts)
         if piece == 'X':
             print("Player " + piece + "'s turn")
             col_input = input("Choose a col from 0-6")
@@ -118,7 +159,7 @@ def start_game():
                     print("Column is full. Try a different one!")
                 else:
                     board.display()
-                    if board.identify_win(piece) == True:
+                    if board.identify_win1(piece) == True:
                         print("Player 1 wins!")
                         is_winner = True
                     else:
@@ -136,7 +177,7 @@ def start_game():
                     print("Column is full. Try a different one!")
                 else:
                     board.display()
-                    if board.identify_win(piece) == True:
+                    if board.identify_win1(piece) == True:
                         print("Player 2 wins!")
                         is_winner = True
                     else:
@@ -145,4 +186,6 @@ def start_game():
             print("It is a tie! Restart to play again.")
 start_game()
 
-# ASSIGNED JULY 2: play your own game a couple of times and see if there's any edge cases that don't work. Some examples include try hitting the edge of board; does it work as expected. Filling a column and trying to put down a piece; does it give you an error? The goal of this is to try to stress test your own code and identify if it runs as expected or if there's any errors. 
+# ASSIGNED JULY 10: try for like 1-2 to hours to try to debug this. 
+# If you get stuck, we'll talk about it for longer next week, and possibly try a different route. 
+# Really abuse the print statements and get a sense for what's happening at every step and what you expect to happen at every step. 
