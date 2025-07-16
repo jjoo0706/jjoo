@@ -11,6 +11,8 @@
 # 'full: going to see if the board is full or not
 # 'identify_win'
 
+import random
+
 class Board: 
     def __init__(self):
         self.rows = 6
@@ -42,15 +44,15 @@ class Board:
                 self.grid[r][col] = piece
                 self.piece_counts[piece] += 1
                 print("drop_piece, (r, col)", (r, col))
-                self.last_move = (self.rows - 1 - r, col)
+                self.last_move = (r, col)
                 return True
             r -= 1
         return False
     
     def count_direction(self, row, col, piece, r_move, c_move):
         count = 0
-        r = r_move
-        c = c_move
+        r = row + r_move
+        c = col + c_move
         while 0 <= r < self.rows and 0 <= c < self.columns and self.grid[r][c] == piece:
             count += 1
             r += r_move
@@ -67,6 +69,7 @@ class Board:
                 c += 1
             r += 1
         return True
+    
 
     # Is there a way to be more clever about this identify_win? 
     # At this point, we're checking the entire board every time we run identify_win 
@@ -76,54 +79,51 @@ class Board:
     # when a spot is empty 
     # When there's been less than four moves, then there's definitely not going to be a win. 
     # Maybe do a point system? 
-    def identify_win(self, piece):
-        # Check horizontal win 
-        r = 0
-        while r < self.rows:
-            c = 0
-            while c < self.columns - 3:
-                if self.grid[r][c] == piece and self.grid[r][c+1] == piece and self.grid[r][c+2] == piece and self.grid[r][c+3] == piece:
-                    return True
-                c += 1
-            r += 1
-        # Check vertical win
-        c = 0
-        while c < self.columns:
-            r = 0
-            while r < self.rows - 3:
-                if self.grid[r][c] == piece and self.grid[r+1][c] == piece and self.grid[r+2][c] == piece and self.grid[r+3][c] == piece:
-                    return True
-                r += 1
-            c += 1
-        # Check reverse diagonal (\) win
-        r = 0
-        while r < self.rows - 3:
-            c = 0
-            while c < self.columns - 3:
-                if self.grid[r][c] == piece and self.grid[r+1][c+1] == piece and self.grid[r+2][c+2] == piece and self.grid[r+3][c+3] == piece:
-                    return True
-                c += 1
-            r += 1
-        # Check diagonal (/) win
-        r = 0
-        while r < self.rows:
-            c = 0
-            while c < self.columns - 3:
-                if self.grid[r][c] == piece and self.grid[r-1][c+1] == piece and self.grid[r-2][c+2] == piece and self.grid[r-3][c+3] == piece:
-                    return True
-                c += 1
-            r += 1
+    # def identify_win(self, piece):
+    #     # Check horizontal win 
+    #     r = 0
+    #     while r < self.rows:
+    #         c = 0
+    #         while c < self.columns - 3:
+    #             if self.grid[r][c] == piece and self.grid[r][c+1] == piece and self.grid[r][c+2] == piece and self.grid[r][c+3] == piece:
+    #                 return True
+    #             c += 1
+    #         r += 1
+    #     # Check vertical win
+    #     c = 0
+    #     while c < self.columns:
+    #         r = 0
+    #         while r < self.rows - 3:
+    #             if self.grid[r][c] == piece and self.grid[r+1][c] == piece and self.grid[r+2][c] == piece and self.grid[r+3][c] == piece:
+    #                 return True
+    #             r += 1
+    #         c += 1
+    #     # Check reverse diagonal (\) win
+    #     r = 0
+    #     while r < self.rows - 3:
+    #         c = 0
+    #         while c < self.columns - 3:
+    #             if self.grid[r][c] == piece and self.grid[r+1][c+1] == piece and self.grid[r+2][c+2] == piece and self.grid[r+3][c+3] == piece:
+    #                 return True
+    #             c += 1
+    #         r += 1
+    #     # Check diagonal (/) win
+    #     r = 0
+    #     while r < self.rows:
+    #         c = 0
+    #         while c < self.columns - 3:
+    #             if self.grid[r][c] == piece and self.grid[r-1][c+1] == piece and self.grid[r-2][c+2] == piece and self.grid[r-3][c+3] == piece:
+    #                 return True
+    #             c += 1
+    #         r += 1
         
-        return False
+    #     return False
 
     def identify_win1(self, piece):
         if self.piece_counts[piece] < 3 or self.last_move is None:
             return False
         row = self.last_move[0]
-        print("last_move", self.last_move)
-        print("row", row)
         col = self.last_move[1]
-        print("col", col)
         directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
         i = 0
         while i < len(directions):
@@ -137,9 +137,31 @@ class Board:
             i += 1
         return False
 
+def copy_board(board):
+    new_board = Board()
+    new_grid = []
+    for r in board.grid:
+        new_row = []
+        for c in row:
+            new_row += [c]
+        new_grid += [new_row]
+
+def score_move(board, col, bot_piece, opp_piece):
+    temp_board 
+
 # Write a function that will start the Connect 4 Game using the Connect 4 object. 
 
 def start_game():
+    def bot_move(board):
+        cols = []
+        for i in range(board.columns):
+            if board.grid[0][i] == ' ':
+                cols += [i]
+        return random.choice(cols)
+    mode = input("Enter 1 to play against another player. Enter 2 to play against a bot: ")
+    if mode != "1" and mode != "2":
+        print("Please choose 1 or 2.")
+        mode = input("Enter 1 to play against another player. Enter 2 to play against a bot: ")
     is_winner = False
     board = Board()
     piece = 'X'
@@ -147,8 +169,9 @@ def start_game():
     while not is_winner:
         print("Piece counts", board.piece_counts)
         if piece == 'X':
+            print("first if")
             print("Player " + piece + "'s turn")
-            col_input = input("Choose a col from 0-6")
+            col_input = input("Choose a column from 0-6")
             if int(col_input) < 0 or int(col_input) > 6:
                 print("Please choose from column 0-6")
                 col_input = input("Choose a col from 0-6")
@@ -163,10 +186,17 @@ def start_game():
                         print("Player 1 wins!")
                         is_winner = True
                     else:
-                        piece = "O"
+                        print("mode", mode)
+                        if mode == "1":
+                            piece = "O"
+                        elif mode == "2":
+                            piece = ""
+                            bot = "Yes"
+                            print("bot", bot)
         elif piece == "O":
+            print("elif")
             print("Player " + piece + "'s turn")
-            col_input = input("Choose a col from 0-6")
+            col_input = input("Choose a column from 0-6")
             if int(col_input) < 0 or int(col_input) > 6:
                 print("Please choose from column 0-6")
                 col_input = input("Choose a col from 0-6")
@@ -182,10 +212,27 @@ def start_game():
                         is_winner = True
                     else:
                         piece = "X"
-        if board.full():
+        elif bot == "Yes":
+            print("in bot elif statement")
+            col = bot_move(board)
+            board.drop_piece(col, "O")
+            board.display()
+            print("Bot chooses column: " + str(col))
+            if board.identify_win1("O") == True:
+                print("Bot wins!")
+                is_winner = True
+            else:
+                piece = "X"
+                bot = ""
+        if board.full() and not is_winner:
             print("It is a tie! Restart to play again.")
 start_game()
 
-# ASSIGNED JULY 10: try for like 1-2 to hours to try to debug this. 
-# If you get stuck, we'll talk about it for longer next week, and possibly try a different route. 
-# Really abuse the print statements and get a sense for what's happening at every step and what you expect to happen at every step. 
+# ASSIGNED JULY 16 
+# Try to implement a bot that you could play against! 
+# We want to make our bot a little bit more intelligent. The way that we can do this is by giving a score to each of the columns. 
+# Think of a scoring method that will help the bot decide which positions to pick. 
+# Start writing a function that will have the bot keep track of these scores. 
+# Remember you have to update the scores of the columns. 
+# Make your own choice on deciding the scores of each of the columns. 
+# NExt week: we'll talk about the way the bot will decide on which column. 
