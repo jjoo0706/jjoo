@@ -43,7 +43,7 @@ class Board:
             if self.grid[r][col] == ' ':
                 self.grid[r][col] = piece
                 self.piece_counts[piece] += 1
-                print("drop_piece, (r, col)", (r, col))
+                # print("drop_piece, (r, col)", (r, col))
                 self.last_move = (r, col)
                 return True
             r -= 1
@@ -80,6 +80,7 @@ class Board:
     # When there's been less than four moves, then there's definitely not going to be a win. 
     # Maybe do a point system? 
     # def identify_win(self, piece):
+    #   Function that identifies win based on reading the entire board. 
     #     # Check horizontal win 
     #     r = 0
     #     while r < self.rows:
@@ -120,6 +121,7 @@ class Board:
     #     return False
 
     def identify_win1(self, piece):
+        # Function that identifies if there is win by checking all directions of the current piece. 
         if self.piece_counts[piece] < 3 or self.last_move is None:
             return False
         row = self.last_move[0]
@@ -137,63 +139,68 @@ class Board:
             i += 1
         return False
 
-def copy_board(og_board):
-    new_board = Board()
-    new_grid = []
-    for row in og_board.grid:
-        new_row = []
-        for c in row:
-            new_row += [c]
-        new_grid += [new_row]
-    new_board.grid = new_grid
-    new_piece = {}
-    for i in og_board.piece_counts:
-        new_piece[i] = og_board.piece_counts[i]
-    new_board.piece_counts = new_piece
-    new_board.rows = og_board.rows
-    new_board.columns = og_board.columns
-    new_board.last_move = og_board.last_move
-    return new_board
-    
 
-def col_scores(board, bot_piece, opp_piece):
-    scores = []
-    center = board.columns // 2
-    for c in range(board.columns):
-        col_score = 0
-        if board.grid[0][c] != ' ':
-            scores += [col_score]
-        else:
-            temp_board = copy_board(board)
-            temp_board.drop_piece(c, bot_piece)
-            if temp_board.identify_win1(bot_piece):
-                col_score += 1000
-            temp_board = copy_board(board)
-            temp_board.drop_piece(c, opp_piece)
-            if temp_board.identify_win1(bot_piece):
-                col_score += 900
-            if c == board.columns // 2:
-                col_score += 3
-            elif c in [2, 3, 4]:
-                col_score += 2
+class Bot:
+    def __init__(self, bot_piece, opp_piece):
+        self.bot_piece = bot_piece
+        self.opp_piece = opp_piece
+    
+    # Function that creates a deep copy of the current game board so that the bot can simulate moves.
+    def copy_board(self, og_board):
+        new_board = Board()
+        new_grid = []
+        for row in og_board.grid:
+            new_row = []
+            for c in row:
+                new_row += [c]
+            new_grid += [new_row]
+        new_board.grid = new_grid
+        new_piece = {}
+        for i in og_board.piece_counts:
+            new_piece[i] = og_board.piece_counts[i]
+        new_board.piece_counts = new_piece
+        new_board.rows = og_board.rows
+        new_board.columns = og_board.columns
+        new_board.last_move = og_board.last_move
+        return new_board
+
+    # Function that evaluates how good each column (0-6) is for the bot to play in.
+    # If playing in the column lets the bot win immediately +1000
+    # If the bot can block a column where the opponent could win +900
+    # Small bonus points based on column position (Center = Best)
+    def col_scores(self, board):
+        scores = []
+        for c in range(board.columns):
+            col_score = 0
+            if board.grid[0][c] != ' ':
+                scores += [-1]
             else:
-                col_score += 1
-            scores += [col_score]
-    return  scores
+                temp_board = self.copy_board(board)
+                dropped_piece = temp_board.drop_piece(c, self.bot_piece)
 
-# Write a function that will start the Connect 4 Game using the Connect 4 object. 
+                if dropped_piece != False:
+                    if temp_board.identify_win1(self.bot_piece):
+                        col_score += 1000
+                else:
+                    scores += [-1]
+                
+                temp_board = self.copy_board(board)
+                opp_dp = temp_board.drop_piece(c, self.opp_piece)
+                if opp_dp != False:
+                    if temp_board.identify_win1(self.opp_piece):
+                        col_score += 900
+                
+                if c == board.columns // 2:
+                    col_score += 3
+                elif c in [2, 3, 4]:
+                    col_score += 2
+                else:
+                    col_score += 1
+                scores += [col_score]
+        return scores
 
-def start_game():
-    is_winner = False
-    board = Board()
-    piece = 'X'
-    bot = ""
-    board.display()
-    
-    def bot_move(board):
-        bot_piece = "O"
-        opp_piece = "X"
-        scores = col_scores(board, bot_piece, opp_piece)
+    def choose_move(self, board):
+        scores = self.col_scores(board)
         best_col = 0
         best_score = -1
         for i in range(len(scores)):
@@ -202,14 +209,24 @@ def start_game():
                 best_score = scores[i]
         return best_col
 
+# Write a function that will start the Connect 4 Game using the Connect 4 object. 
+
+def start_game():
+    is_winner = False
+    board = Board()
+    piece = 'X'
+    board.display()
+    
     mode = input("Enter 1 to play against another player. Enter 2 to play against a bot: ")
     if mode != "1" and mode != "2":
         print("Please choose 1 or 2.")
         mode = input("Enter 1 to play against another player. Enter 2 to play against a bot: ")
+    if mode == "2":
+        bot_player = Bot("O", "X")
+
     while not is_winner:
         print("Piece counts", board.piece_counts)
         if piece == 'X':
-            print("first if")
             print("Player " + piece + "'s turn")
             col_input = input("Choose a column from 0-6")
             if int(col_input) < 0 or int(col_input) > 6:
@@ -226,44 +243,32 @@ def start_game():
                         print("Player 1 wins!")
                         is_winner = True
                     else:
-                        print("mode", mode)
-                        if mode == "1":
-                            piece = "O"
-                        elif mode == "2":
-                            piece = ""
-                            bot = "Yes"
-                            print("bot", bot)
+                        piece = "O"
+        
         elif piece == "O":
-            print("elif")
-            print("Player " + piece + "'s turn")
-            col_input = input("Choose a column from 0-6")
-            if int(col_input) < 0 or int(col_input) > 6:
-                print("Please choose from column 0-6")
-                col_input = input("Choose a col from 0-6")
-            else:
-                col = int(col_input)
-                position = board.drop_piece(col, piece)
-                if position == False:
-                    print("Column is full. Try a different one!")
+            if mode == "1":
+                print("Player " + piece + "'s turn")
+                col_input = input("Choose a column from 0-6")
+                if int(col_input) < 0 or int(col_input) > 6:
+                    print("Please choose from column 0-6")
+                    col_input = input("Choose a col from 0-6")
                 else:
-                    board.display()
-                    if board.identify_win1(piece) == True:
-                        print("Player 2 wins!")
-                        is_winner = True
-                    else:
-                        piece = "X"
-        elif bot == "Yes":
-            print("in bot elif statement")
-            col = bot_move(board)
-            board.drop_piece(col, "O")
-            board.display()
-            print("Bot chooses column: " + str(col))
-            if board.identify_win1("O"):
-                print("Bot wins!")
-                is_winner = True
+                    col = int(col_input)
+            elif mode == "2":
+                print("Bot's turn")
+                col = bot_player.choose_move(board)
+                print("Bot chooses column: " + str(col))
+            position = board.drop_piece(col, piece)
+            if position == False:
+                print("Column is full. Try a different one!")
             else:
-                piece = "X"
-                bot = ""
+                board.display()
+                if board.identify_win1(piece) == True:
+                    print("Player 2 wins!")
+                    is_winner = True
+                else:
+                    piece = "X"
+
         if board.full() and not is_winner:
             print("It is a tie! Restart to play again.")
 start_game()
@@ -276,3 +281,8 @@ start_game()
 # Remember you have to update the scores of the columns. 
 # Make your own choice on deciding the scores of each of the columns. 
 # NExt week: we'll talk about the way the bot will decide on which column. 
+
+#JULY 23 
+# Note: Remember to make notes and comments on your code pretty thoroughly. 
+# Here, let's start thinking about where using classes would be helpful. Having a class object for a bot would be helpful since we can contain the methods within the class and we might want to call two bot objects to play against each other. 
+# HW - Adjust your column deciding function. Add a littl bit of randomness to it 
