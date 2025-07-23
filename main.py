@@ -137,35 +137,75 @@ class Board:
             i += 1
         return False
 
-def copy_board(board):
+def copy_board(og_board):
     new_board = Board()
     new_grid = []
-    for r in board.grid:
+    for row in og_board.grid:
         new_row = []
         for c in row:
             new_row += [c]
         new_grid += [new_row]
+    new_board.grid = new_grid
+    new_piece = {}
+    for i in og_board.piece_counts:
+        new_piece[i] = og_board.piece_counts[i]
+    new_board.piece_counts = new_piece
+    new_board.rows = og_board.rows
+    new_board.columns = og_board.columns
+    new_board.last_move = og_board.last_move
+    return new_board
+    
 
-def score_move(board, col, bot_piece, opp_piece):
-    temp_board 
+def col_scores(board, bot_piece, opp_piece):
+    scores = []
+    center = board.columns // 2
+    for c in range(board.columns):
+        col_score = 0
+        if board.grid[0][c] != ' ':
+            scores += [col_score]
+        else:
+            temp_board = copy_board(board)
+            temp_board.drop_piece(c, bot_piece)
+            if temp_board.identify_win1(bot_piece):
+                col_score += 1000
+            temp_board = copy_board(board)
+            temp_board.drop_piece(c, opp_piece)
+            if temp_board.identify_win1(bot_piece):
+                col_score += 900
+            if c == board.columns // 2:
+                col_score += 3
+            elif c in [2, 3, 4]:
+                col_score += 2
+            else:
+                col_score += 1
+            scores += [col_score]
+    return  scores
 
 # Write a function that will start the Connect 4 Game using the Connect 4 object. 
 
 def start_game():
+    is_winner = False
+    board = Board()
+    piece = 'X'
+    bot = ""
+    board.display()
+    
     def bot_move(board):
-        cols = []
-        for i in range(board.columns):
-            if board.grid[0][i] == ' ':
-                cols += [i]
-        return random.choice(cols)
+        bot_piece = "O"
+        opp_piece = "X"
+        scores = col_scores(board, bot_piece, opp_piece)
+        best_col = 0
+        best_score = -1
+        for i in range(len(scores)):
+            if scores[i] > best_score:
+                best_col = i
+                best_score = scores[i]
+        return best_col
+
     mode = input("Enter 1 to play against another player. Enter 2 to play against a bot: ")
     if mode != "1" and mode != "2":
         print("Please choose 1 or 2.")
         mode = input("Enter 1 to play against another player. Enter 2 to play against a bot: ")
-    is_winner = False
-    board = Board()
-    piece = 'X'
-    board.display()
     while not is_winner:
         print("Piece counts", board.piece_counts)
         if piece == 'X':
@@ -218,7 +258,7 @@ def start_game():
             board.drop_piece(col, "O")
             board.display()
             print("Bot chooses column: " + str(col))
-            if board.identify_win1("O") == True:
+            if board.identify_win1("O"):
                 print("Bot wins!")
                 is_winner = True
             else:
