@@ -141,9 +141,11 @@ class Board:
 
 
 class Bot:
-    def __init__(self, bot_piece, opp_piece):
+    def __init__(self, bot_piece, opp_piece, preferred_col, move_number):
         self.bot_piece = bot_piece
         self.opp_piece = opp_piece
+        self.preferred_col = None
+        self.move_number = move_number
     
     # Function that creates a deep copy of the current game board so that the bot can simulate moves.
     def copy_board(self, og_board):
@@ -181,8 +183,6 @@ class Bot:
                 if dropped_piece != False:
                     if temp_board.identify_win1(self.bot_piece):
                         col_score += 1000
-                else:
-                    scores += [-1]
                 
                 temp_board = self.copy_board(board)
                 opp_dp = temp_board.drop_piece(c, self.opp_piece)
@@ -190,24 +190,59 @@ class Bot:
                     if temp_board.identify_win1(self.opp_piece):
                         col_score += 900
                 
-                if c == board.columns // 2:
+                if c == self.preferred_col:
+                    if board.grid[0][c] == self.opp_piece:
+                        col_score -= 100
+                    else:
+                        col_score += 3
+
+
+                if self.preferred_col > c:
+                    dist = self.preferred_col - c
+                else:
+                    dist = c - self.preferred_col
+
+                if dist == 0:
                     col_score += 3
-                elif c in [2, 3, 4]:
+                elif dist == 1:
                     col_score += 2
                 else:
                     col_score += 1
+
                 scores += [col_score]
+                print('scores', scores)
         return scores
 
     def choose_move(self, board):
+        valid_col = []
+        for c in range(board.columns):
+            if board.grid[0][c] == ' ':
+                valid_col += [c]
+        
+        if len(valid_col) == 0:
+            return None
+
+        if self.move_number == 0:
+            self.preferred_col = random.choice(valid_col)
         scores = self.col_scores(board)
-        best_col = 0
-        best_score = -1
+
+        max_score = -1
+        for s in scores:
+            if s > max_score:
+                max_score = s
+
+        best_col = []
         for i in range(len(scores)):
-            if scores[i] > best_score:
-                best_col = i
-                best_score = scores[i]0
-        return best_col
+            if scores[i] == max_score and board.grid[0][i] == ' ':
+                best_col += [i]
+            
+        if len(best_col) > 0:
+            move = random.choice(best_col)
+        else:
+            move = random.choice(valid_col)
+        
+        self.move_number += 1
+        return move
 
 
 # Write a function that will start the Connect 4 Game using the Connect 4 object. 
@@ -223,7 +258,7 @@ def start_game():
         print("Please choose 1 or 2.")
         mode = input("Enter 1 to play against another player. Enter 2 to play against a bot: ")
     if mode == "2":
-        bot_player = Bot("O", "X")
+        bot_player = Bot("O", "X", '', 0)
 
     while not is_winner:
         print("Piece counts", board.piece_counts)
@@ -288,3 +323,8 @@ start_game()
 # Here, let's start thinking about where using classes would be helpful. Having a class object for a bot would be helpful since we can contain the methods within the class and we might want to call two bot objects to play against each other. 
 # HW - Adjust your column deciding function. Add a littl bit of randomness to it. Use the random package in order to do this! 
 # Try running Bot v Bot. This should not be deterministic. The patterns of the columns that they choose should be different. 
+
+# JULY 30 
+# Do iterative coding! Add one thing, test your function, and if it doesn't do what you want, add a new thing! 
+# 1-2 hours on this. 
+# Try Bot vs Bot -- only try it out! Write down some things you identified as not working as expected. 
