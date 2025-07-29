@@ -169,17 +169,20 @@ class Bot:
     # If the bot can block a column where the opponent could win +900
     # Small bonus points based on column position (Center = Best)
     def col_scores(self, board):
-        scores = [0] * board.columns
-        c = 0
-        while c < board.columns:
-            if board.grid[0][c] == ' ':
-                col_score = 0
+        scores = []
+        for c in range(board.columns):
+            col_score = 0
+            if board.grid[0][c] != ' ':
+                scores += [-1]
+            else:
                 temp_board = self.copy_board(board)
                 dropped_piece = temp_board.drop_piece(c, self.bot_piece)
 
                 if dropped_piece != False:
                     if temp_board.identify_win1(self.bot_piece):
                         col_score += 1000
+                else:
+                    scores += [-1]
                 
                 temp_board = self.copy_board(board)
                 opp_dp = temp_board.drop_piece(c, self.opp_piece)
@@ -194,42 +197,18 @@ class Bot:
                 else:
                     col_score += 1
                 scores += [col_score]
-            else:
-                scores += [-1]
-            c += 1
         return scores
 
     def choose_move(self, board):
         scores = self.col_scores(board)
         best_col = 0
         best_score = -1
-        i = 0
-        while i < len(scores):
-            score = scores[i]
-            if score > best_score:
-                best_score = score
-                best_col = [i]
-            elif score == best_score:
-                best_col += [i]
-            i += 1
-        
-        available_col = []
-        j = 0
-        while j < len(best_col):
-            col = best_col[j]
-            if board.grid[0][col] == ' ':
-                available_col += [col]
-            j += 1
+        for i in range(len(scores)):
+            if scores[i] > best_score:
+                best_col = i
+                best_score = scores[i]0
+        return best_col
 
-        if len(available_col) > 0:
-            return random.choice(available_col)
-        else:
-            k = 0
-            while k < board.columns:
-                if board.grid[0][k] == ' ':
-                    return k
-                k += 1
-            return 0
 
 # Write a function that will start the Connect 4 Game using the Connect 4 object. 
 
