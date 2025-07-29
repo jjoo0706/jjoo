@@ -285,4 +285,5 @@ start_game()
 #JULY 23 
 # Note: Remember to make notes and comments on your code pretty thoroughly. 
 # Here, let's start thinking about where using classes would be helpful. Having a class object for a bot would be helpful since we can contain the methods within the class and we might want to call two bot objects to play against each other. 
-# HW - Adjust your column deciding function. Add a littl bit of randomness to it 
+# HW - Adjust your column deciding function. Add a littl bit of randomness to it. Use the random package in order to do this! 
+# Try running Bot v Bot. This should not be deterministic. The patterns of the columns that they choose should be different. 
