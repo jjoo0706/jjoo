@@ -229,32 +229,33 @@ class Bot:
         if len(valid_col) == 0:
             return None
 
-        scores = self.col_scores(board)
-
         if self.move_number == 0 or self.preferred_col is None:
             self.preferred_col = random.choice(valid_col)
 
         if self.preferred_col not in valid_col:
-            max_score = -9999
-            best_cols = []
-            i = 0
-            while i < len(scores):
-                if i in valid_col:
-                    if scores[i] > max_score:
-                        max_score = scores[i]
-                        best_cols = [i]
-                    elif scores[i] == max_score:
-                        best_cols += [i]
-                i += 1
-            if best_cols:
-                self.preferred_col = random.choice(best_cols)
-            else:
-                self.preferred_col = random.choice(valid_col)
+            self.preferred_col = random.choice(valid_col)
 
-        if random.random() < 0.3:
-            move = random.choice(valid_col)
+        scores = self.col_scores(board)
+
+
+        max_score = -1
+        s = 0
+        while s < len(scores):
+            if scores[s] > max_score:
+                max_score = scores[s]
+            s += 1
+
+        best_col = []
+        i = 0
+        while i < len(scores):
+            if scores[i] == max_score and board.grid[0][i] == ' ':
+                best_col += [i]
+            i += 1
+            
+        if len(best_col) > 0:
+            move = random.choice(best_col)
         else:
-            move = self.preferred_col
+            move = random.choice(valid_col)
 
         self.move_number += 1
         return move
