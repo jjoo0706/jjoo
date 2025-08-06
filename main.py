@@ -171,24 +171,26 @@ class Bot:
     # If the bot can block a column where the opponent could win +900
     # Small bonus points based on column position (Center = Best)
     def col_scores(self, board):
-        scores = []
-        for c in range(board.columns):
+        scores = [0] * board.columns
+        center = board.columns // 2
+
+        c = 0
+        while c < board.columns:
             col_score = 0
             if board.grid[0][c] != ' ':
-                scores += [-1]
+                scores[c] = -10000
             else:
                 temp_board = self.copy_board(board)
-                dropped_piece = temp_board.drop_piece(c, self.bot_piece)
+                temp_board.drop_piece(c, self.bot_piece)
 
-                if dropped_piece != False:
-                    if temp_board.identify_win1(self.bot_piece):
-                        col_score += 1000
+                if temp_board.identify_win1(self.bot_piece):
+                    col_score += 1000
                 
-                temp_board = self.copy_board(board)
-                opp_dp = temp_board.drop_piece(c, self.opp_piece)
-                if opp_dp != False:
-                    if temp_board.identify_win1(self.opp_piece):
-                        col_score += 900
+                temp_board_opp = self.copy_board(board)
+                temp_board_opp.drop_piece(c, self.opp_piece)
+
+                if temp_board_opp.identify_win1(self.opp_piece):
+                    col_score += 900
                 
                 if c == self.preferred_col:
                     if board.grid[0][c] == self.opp_piece:
@@ -196,29 +198,21 @@ class Bot:
                     else:
                         col_score += 3
 
-
-                if self.preferred_col > c:
-                    dist = self.preferred_col - c
-                else:
-                    dist = c - self.preferred_col
-
-                if dist == 0:
-                    col_score += 3
-                elif dist == 1:
+                if c == center or c == center - 1 or c == center + 1:
                     col_score += 2
-                else:
+                elif c == 2 or c == 4:
                     col_score += 1
-
-                scores += [col_score]
-                print('scores', scores)
+                scores[c] = col_score
+            c += 1 
         return scores
 
     def choose_move(self, board):
         valid_col = []
-        for c in range(board.columns):
+        c = 0
+        while c < board.columns:
             if board.grid[0][c] == ' ':
                 valid_col += [c]
-        
+            c += 1
         if len(valid_col) == 0:
             return None
 
