@@ -343,4 +343,11 @@ start_game()
 # Try Bot vs Bot -- only try it out! Write down some things you identified as not working as expected. 
 
 # AUG 8 
-# 1) 
+# Given a list of scores, write code that will remove the unique values. 
+# [3, 0, 1, 2, 0, 1, 1, 0] -> [3, 0, 1, 2]
+# With this unique list, randomly pick a value. 
+# [3, 0, 1, 2] -> 1 
+# Then, make a list of the indices that this number appears in. 
+# [2, 5, 6]
+# Then pick randomly from this list! This will be the column you go down. 
+# You can also code a different way to do it -- this is just one way to do it! 
