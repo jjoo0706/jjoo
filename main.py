@@ -218,7 +218,7 @@ class Bot:
             c += 1
         return scores
 
-    def choose_move(self, board):
+    def choose_move(self, board, avoid_col):
         valid_col = []
         c = 0
         while c < board.columns:
@@ -228,6 +228,16 @@ class Bot:
 
         if len(valid_col) == 0:
             return None
+        
+        if avoid_col in valid_col:
+            temp_boarda = self.copy_board(board)
+            temp_boarda.drop_piece(avoid_col, self.piece)
+            if not temp_boarda.identify_win1(self.piece):
+                new_valid_col = []
+                for col in valid_col:
+                    if col != avoid_col:
+                        new_valid_col += [col]
+                valid_col = new_valid_col
 
         if self.move_number == 0 or self.preferred_col is None:
             self.preferred_col = random.choice(valid_col)
@@ -236,7 +246,7 @@ class Bot:
             self.preferred_col = random.choice(valid_col)
 
         scores = self.col_scores(board)
-
+        print('scores', scores)
 
         max_score = -1
         s = 0
@@ -252,6 +262,7 @@ class Bot:
                 best_col += [i]
             i += 1
             
+        print('best_col', best_col)
         if len(best_col) > 0:
             move = random.choice(best_col)
         else:
@@ -269,36 +280,42 @@ def start_game():
     piece = 'X'
     board.display()
     
-    mode = input("Enter 1 to play against another player. Enter 2 to play against a bot: ")
-    if mode != "1" and mode != "2":
-        print("Please choose 1 or 2.")
-        mode = input("Enter 1 to play against another player. Enter 2 to play against a bot: ")
+    mode = input("Enter 1 to play against another player. Enter 2 to play against a bot. Enter 3 for Bot vs. Bot: ")
+    if mode != "1" and mode != "2" and mode != "3":
+        print("Please choose 1, 2, or 3.")
+        mode = input("Enter 1 to play against another player. Enter 2 to play against a bot. Enter 3 for Bot vs. Bot: ")
     if mode == "2":
         bot_player = Bot("O", "X", '', 0)
+    elif mode == "3":
+        bot_X = Bot("X", "O", '', 0)
+        bot_O = Bot("O", "X", '', 0)
 
     while not is_winner:
         print("Piece counts", board.piece_counts)
-        if piece == 'X':
-            print("Player " + piece + "'s turn")
-            col_input = input("Choose a column from 0-6")
-            if int(col_input) < 0 or int(col_input) > 6:
-                print("Please choose from column 0-6")
-                col_input = input("Choose a col from 0-6")
-            else:
-                col = int(col_input)            
+        last_player_move = None
+        if mode == "3":
+            if piece == 'X':
+                user_input = input("Type X to continue: ")
+                while user_input.upper() != "X":
+                    user_input = input("Type X to continue: ")
+                col = bot_X.choose_move(board, last_player_move)
+                last_player_move = col
                 position = board.drop_piece(col, piece)
-                if position == False:
-                    print("Column is full. Try a different one!")
-                else:
-                    board.display()
-                    if board.identify_win1(piece) == True:
-                        print("Player 1 wins!")
-                        is_winner = True
-                    else:
-                        piece = "O"
-        
-        elif piece == "O":
-            if mode == "1":
+                board.display()
+                print("Bot_X chooses column: " + str(col))
+                piece = 'O'
+            elif piece == 'O':
+                user_input = input("Type O to continue: ")
+                while user_input.upper() != "O":
+                    user_input = input("Type O to continue: ")
+                col = bot_O.choose_move(board, last_player_move)
+                last_player_move = col
+                position = board.drop_piece(col, piece)
+                board.display()
+                print("Bot_O chooses column: " + str(col))
+                piece = 'X'
+        else:
+            if piece == 'X':
                 print("Player " + piece + "'s turn")
                 col_input = input("Choose a column from 0-6")
                 if int(col_input) < 0 or int(col_input) > 6:
@@ -306,20 +323,42 @@ def start_game():
                     col_input = input("Choose a col from 0-6")
                 else:
                     col = int(col_input)
-            elif mode == "2":
-                print("Bot's turn")
-                col = bot_player.choose_move(board)
-                print("Bot chooses column: " + str(col))
-            position = board.drop_piece(col, piece)
-            if position == False:
-                print("Column is full. Try a different one!")
-            else:
-                board.display()
-                if board.identify_win1(piece) == True:
-                    print("Player 2 wins!")
-                    is_winner = True
+                    last_player_move = col     
+                    position = board.drop_piece(col, piece)
+                    if position == False:
+                        print("Column is full. Try a different one!")
+                    else:
+                        board.display()
+                        if board.identify_win1(piece) == True:
+                            print("Player 1 wins!")
+                            is_winner = True
+                        else:
+                            piece = "O"
+        
+            elif piece == "O":
+                if mode == "1":
+                    print("Player " + piece + "'s turn")
+                    col_input = input("Choose a column from 0-6")
+                    if int(col_input) < 0 or int(col_input) > 6:
+                        print("Please choose from column 0-6")
+                        col_input = input("Choose a col from 0-6")
+                    else:
+                        col = int(col_input)
+                elif mode == "2":
+                    print("Bot's turn")
+                    col = bot_player.choose_move(board, last_player_move)
+                    print("Bot chooses column: " + str(col))
+                    
+                position = board.drop_piece(col, piece)
+                if position == False:
+                    print("Column is full. Try a different one!")
                 else:
-                    piece = "X"
+                    board.display()
+                    if board.identify_win1(piece) == True:
+                        print("Player 2 wins!")
+                        is_winner = True
+                    else:
+                        piece = "X"
 
         if board.full() and not is_winner:
             print("It is a tie! Restart to play again.")
@@ -354,3 +393,6 @@ start_game()
 # [2, 5, 6]
 # Then pick randomly from this list! This will be the column you go down. 
 # You can also code a different way to do it -- this is just one way to do it! 
+
+# AUG 15 
+# Julie todo - test this out 
