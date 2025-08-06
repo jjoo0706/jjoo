@@ -192,33 +192,48 @@ class Bot:
                 if temp_board_opp.identify_win1(self.opp_piece):
                     col_score += 900
                 
-                if c == self.preferred_col:
-                    if board.grid[0][c] == self.opp_piece:
-                        col_score -= 100
-                    else:
-                        col_score += 3
+                if self.preferred_col == None:
+                    pref = center
+                else:
+                    pref = self.preferred_col
 
-                if c == center or c == center - 1 or c == center + 1:
+                if pref >= c:
+                    d = pref - c
+                else:
+                    d = c - pref
+                
+                if d == 0:
+                    col_score += 3
+                elif d == 1:
                     col_score += 2
-                elif c == 2 or c == 4:
+                else:
                     col_score += 1
+
+                if self.preferred_col != None:
+                    if board.grid[0][self.preferred_col] == self.opp_piece:
+                        if c == self.preferred_col:
+                            col_score -= 100
+                col_score += random.randint(0, 2)
                 scores[c] = col_score
-            c += 1 
+            c += 1
         return scores
 
     def choose_move(self, board):
         valid_col = []
-        c = 0
-        while c < board.columns:
+        for c in range(board.columns):
             if board.grid[0][c] == ' ':
-                valid_col += [c]
-            c += 1
+                valid_col += c
         if len(valid_col) == 0:
             return None
 
-        if self.move_number == 0:
+        if self.move_number == 0 or self.preferred_col == None:
             self.preferred_col = random.choice(valid_col)
-        scores = self.col_scores(board)
+
+        if self.preferred_col not in valid_col:
+            self.preferred_col = random.choice(valid_col)
+
+        scores = col_scores()
+
 
         max_score = -1
         for s in scores:
@@ -226,10 +241,14 @@ class Bot:
                 max_score = s
 
         best_col = []
-        for i in range(len(scores)):
+        i = 0
+        print("scores", scores)
+        while i < len(scores):
             if scores[i] == max_score and board.grid[0][i] == ' ':
                 best_col += [i]
-            
+            i += 1
+        print("best_col", best_col)
+        print("valid_col", valid_col)
         if len(best_col) > 0:
             move = random.choice(best_col)
         else:
@@ -322,3 +341,6 @@ start_game()
 # Do iterative coding! Add one thing, test your function, and if it doesn't do what you want, add a new thing! 
 # 1-2 hours on this. 
 # Try Bot vs Bot -- only try it out! Write down some things you identified as not working as expected. 
+
+# AUG 8 
+# 1) 
