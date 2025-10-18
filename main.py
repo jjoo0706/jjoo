@@ -72,4 +72,28 @@ def merge_sort(x):
 
     return merge_step(left_s, right_s)
 
-print(merge_sort(list1))
+# print(merge_sort(list1))
+
+
+# HOMEWORK ASSIGNED OCT 25 
+# I'll send you notes on quicksort 
+# Try finishing this function! 
+def quick_sort(x):
+    if len(x) <= 1:
+        return x
+    pivot = len(x) // 2
+    left = []
+    mid = []
+    right = []
+    for i in x:
+        if i < pivot:
+            left += [i]
+        elif i == pivot:
+            mid += [i]
+        else:
+            right += [i]
+    left_s = quick_sort(left)
+    right_s = quick_sort(right)
+    return left_s + mid + right_s
+
+print (quick_sort(list1))
