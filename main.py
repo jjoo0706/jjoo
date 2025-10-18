@@ -54,11 +54,22 @@ def merge_step(x, y):
 
     return m
 
-list1 = [1, 3, 5, 8]
-list2 = [2, 4, 7, 9]
+list1 = [1, 3, 5, 8, 11, 2, 4, 7, 9]
 
-print(merge_step(list1, list2))
+# print(merge_step(list1, list2))
 
 # HOMEWORK ASSIGNED 10/18 - Code up MergeSort! Use the merge_step in order to code MergeSort. I want you to try to do it using recursion, but it's not entirely necessary. If you get stuck trying to do it in recursion, you can just use loops. 
 
+def merge_sort(x):
+    if len(x) <= 1:
+        return x
+    middle = len(x) // 2
+    l = x[:middle]
+    r= x[middle:]
 
+    left_s = merge_sort(l)
+    right_s= merge_sort(r)
+
+    return merge_step(left_s, right_s)
+
+print(merge_sort(list1))
