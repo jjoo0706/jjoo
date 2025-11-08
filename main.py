@@ -85,39 +85,60 @@ def merge_sort(x):
 def quick_sort(x):
     if len(x) <= 1:
         return x
-
     pivot_index = len(x) // 2
     pivot = x[pivot_index]
-
-    left_num = 0
-    mid_num = 0
-    right_num = 0
-
+    left = []
+    mid = []
+    right = []
     for y in x:
         if y < pivot:
-            left_num += 1
+            left += [y]
         elif y == pivot:
-            mid_num += 1
+            mid += [y]
         else:
-            right_num += 1
-
-    left = [0] * left_num
-    mid = [0] * mid_num
-    right = [0] * right_num
-
-    i = j = k = 0
-    for y in x:
-        if y < pivot:
-            left[i] = y
-            i += 1
-        elif y == pivot:
-            mid[j] = y
-            j += 1
-        else:
-            right[k] = y
-            k += 1
+            right += [y]
     left_s = quick_sort(left)
     right_s = quick_sort(right)
     return left_s + mid + right_s
 
 print(quick_sort(list1))
+
+# Code Bubble Sort 
+def bubble_sort(x):
+    n = len(x)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if x[j] > x[j + 1]:
+                temp = x[j]
+                x[j] = x[j + 1]
+                x[j + 1] = temp
+    return x
+
+print(bubble_sort(list1))
+
+# Code a stack using Object oriented programming 
+
+class Stack: 
+    def __init__(self):
+        self.items = []
+    def is_empty(self):
+        return len(self.items) == 0
+    def push(self, item):
+        self.items += [item]
+    def pop(self):
+        if not self.is_empty():
+            top = self.items[-1]
+            self.items = self.items[:-1]
+            return top
+        else:
+            return None
+    def peek(self):
+        if not self.is_empty():
+            return self.items[-1]
+        else:
+            return None
+    def size(self):
+        return len(self.items)
+
+# Write up the Queue class 
+# Also I'll give you some exercises using stacks and queues 
