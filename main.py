@@ -14,6 +14,8 @@ lst = [4, 1, 2, 7, 6, 25, 36, 12, 42]
 # print(sel_sort(list))
 
 # Code Insertion Sort
+
+
 def ins_sort(x):
     for i in range(len(x)):
         j = i
@@ -27,7 +29,7 @@ def ins_sort(x):
 
 # print(ins_sort(lst))
 
-# write helper function merge 
+# write helper function merge
 def merge_step(x, y):
     m = [0] * (len(x) + len(y))
     i = 0
@@ -54,46 +56,68 @@ def merge_step(x, y):
 
     return m
 
+
 list1 = [1, 3, 5, 8, 11, 2, 4, 7, 9]
 
 # print(merge_step(list1, list2))
 
-# HOMEWORK ASSIGNED 10/18 - Code up MergeSort! Use the merge_step in order to code MergeSort. I want you to try to do it using recursion, but it's not entirely necessary. If you get stuck trying to do it in recursion, you can just use loops. 
+# HOMEWORK ASSIGNED 10/18 - Code up MergeSort! Use the merge_step in order to code MergeSort. I want you to try to do it using recursion, but it's not entirely necessary. If you get stuck trying to do it in recursion, you can just use loops.
+
 
 def merge_sort(x):
     if len(x) <= 1:
         return x
     middle = len(x) // 2
     l = x[:middle]
-    r= x[middle:]
+    r = x[middle:]
 
     left_s = merge_sort(l)
-    right_s= merge_sort(r)
+    right_s = merge_sort(r)
 
     return merge_step(left_s, right_s)
 
 # print(merge_sort(list1))
 
 
-# HOMEWORK ASSIGNED OCT 25 
-# I'll send you notes on quicksort 
-# Try finishing this function! 
+# HOMEWORK ASSIGNED OCT 25
+# I'll send you notes on quicksort
+# Try finishing this function!
 def quick_sort(x):
     if len(x) <= 1:
         return x
-    pivot = len(x) // 2
-    left = []
-    mid = []
-    right = []
-    for i in x:
-        if i < pivot:
-            left += [i]
-        elif i == pivot:
-            mid += [i]
+
+    pivot_index = len(x) // 2
+    pivot = x[pivot_index]
+
+    left_num = 0
+    mid_num = 0
+    right_num = 0
+
+    for y in x:
+        if y < pivot:
+            left_num += 1
+        elif y == pivot:
+            mid_num += 1
         else:
-            right += [i]
+            right_num += 1
+
+    left = [0] * left_num
+    mid = [0] * mid_num
+    right = [0] * right_num
+
+    i = j = k = 0
+    for y in x:
+        if y < pivot:
+            left[i] = y
+            i += 1
+        elif y == pivot:
+            mid[j] = y
+            j += 1
+        else:
+            right[k] = y
+            k += 1
     left_s = quick_sort(left)
     right_s = quick_sort(right)
     return left_s + mid + right_s
 
-print (quick_sort(list1))
+print(quick_sort(list1))
