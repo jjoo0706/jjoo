@@ -101,9 +101,12 @@ def quick_sort(x):
     right_s = quick_sort(right)
     return left_s + mid + right_s
 
+
 print(quick_sort(list1))
 
-# Code Bubble Sort 
+# Code Bubble Sort
+
+
 def bubble_sort(x):
     n = len(x)
     for i in range(n):
@@ -114,17 +117,22 @@ def bubble_sort(x):
                 x[j + 1] = temp
     return x
 
+
 print(bubble_sort(list1))
 
-# Code a stack using Object oriented programming 
+# Code a stack using Object oriented programming
 
-class Stack: 
+
+class Stack:
     def __init__(self):
         self.items = []
+
     def is_empty(self):
         return len(self.items) == 0
+
     def push(self, item):
         self.items += [item]
+
     def pop(self):
         if not self.is_empty():
             top = self.items[-1]
@@ -132,13 +140,22 @@ class Stack:
             return top
         else:
             return None
+
     def peek(self):
         if not self.is_empty():
             return self.items[-1]
         else:
             return None
+
     def size(self):
         return len(self.items)
 
-# Write up the Queue class 
-# Also I'll give you some exercises using stacks and queues 
+# Write up the Queue class
+# Also I'll give you some exercises using stacks and queues
+
+
+class Queue:
+    def __init__(self):
+        self.items = []
+
+    def is_empty()
