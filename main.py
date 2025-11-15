@@ -158,4 +158,15 @@ class Queue:
     def __init__(self):
         self.items = []
 
-    def is_empty()
+    def is_empty(self):
+        return len(self.items) == 0
+
+    def enqueue(self, item):
+        self.items += [item]
+
+    def dequeue(self):
+        if self.is_empty():
+            return None
+        front = self.items[0]
+        self.items = self.items[1:]   # remove first element
+        return front_item
