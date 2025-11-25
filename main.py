@@ -168,5 +168,5 @@ class Queue:
         if self.is_empty():
             return None
         front = self.items[0]
-        self.items = self.items[1:]   # remove first element
-        return front_item
+        self.items = self.items[1:]
+        return front
