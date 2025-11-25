@@ -1,126 +1,126 @@
 # Code Selection Sort
 
-def sel_sort(x):
-    for i in range(len(x)):
-        for j in range(i + 1, len(x)):
-            if x[j] < x[i]:
-                temp = x[i]
-                x[i] = x[j]
-                x[j] = temp
-    return x
+# def sel_sort(x):
+#     for i in range(len(x)):
+#         for j in range(i + 1, len(x)):
+#             if x[j] < x[i]:
+#                 temp = x[i]
+#                 x[i] = x[j]
+#                 x[j] = temp
+#     return x
 
 
-lst = [4, 1, 2, 7, 6, 25, 36, 12, 42]
-# print(sel_sort(list))
+# lst = [4, 1, 2, 7, 6, 25, 36, 12, 42]
+# # print(sel_sort(list))
 
-# Code Insertion Sort
-
-
-def ins_sort(x):
-    for i in range(len(x)):
-        j = i
-        while j > 0 and x[j] < x[j-1]:
-            temp = x[j]
-            x[j] = x[j-1]
-            x[j-1] = temp
-            j -= 1
-    return x
+# # Code Insertion Sort
 
 
-# print(ins_sort(lst))
-
-# write helper function merge
-def merge_step(x, y):
-    m = [0] * (len(x) + len(y))
-    i = 0
-    j = 0
-    k = 0
-    while i < len(x) and j < len(y):
-        if x[i] <= y[j]:
-            m[k] = x[i]
-            i += 1
-        else:
-            m[k] = y[j]
-            j += 1
-
-        k += 1
-    while i < len(x):
-        m[k] = x[i]
-        i += 1
-        k += 1
-
-    while j < len(y):
-        m[k] = y[j]
-        j += 1
-        k += 1
-
-    return m
+# def ins_sort(x):
+#     for i in range(len(x)):
+#         j = i
+#         while j > 0 and x[j] < x[j-1]:
+#             temp = x[j]
+#             x[j] = x[j-1]
+#             x[j-1] = temp
+#             j -= 1
+#     return x
 
 
-list1 = [1, 3, 5, 8, 11, 2, 4, 7, 9]
+# # print(ins_sort(lst))
 
-# print(merge_step(list1, list2))
+# # write helper function merge
+# def merge_step(x, y):
+#     m = [0] * (len(x) + len(y))
+#     i = 0
+#     j = 0
+#     k = 0
+#     while i < len(x) and j < len(y):
+#         if x[i] <= y[j]:
+#             m[k] = x[i]
+#             i += 1
+#         else:
+#             m[k] = y[j]
+#             j += 1
 
-# HOMEWORK ASSIGNED 10/18 - Code up MergeSort! Use the merge_step in order to code MergeSort. I want you to try to do it using recursion, but it's not entirely necessary. If you get stuck trying to do it in recursion, you can just use loops.
+#         k += 1
+#     while i < len(x):
+#         m[k] = x[i]
+#         i += 1
+#         k += 1
 
+#     while j < len(y):
+#         m[k] = y[j]
+#         j += 1
+#         k += 1
 
-def merge_sort(x):
-    if len(x) <= 1:
-        return x
-    middle = len(x) // 2
-    l = x[:middle]
-    r = x[middle:]
-
-    left_s = merge_sort(l)
-    right_s = merge_sort(r)
-
-    return merge_step(left_s, right_s)
-
-# print(merge_sort(list1))
-
-
-# HOMEWORK ASSIGNED OCT 25
-# I'll send you notes on quicksort
-# Try finishing this function!
-def quick_sort(x):
-    if len(x) <= 1:
-        return x
-    pivot_index = len(x) // 2
-    pivot = x[pivot_index]
-    left = []
-    mid = []
-    right = []
-    for y in x:
-        if y < pivot:
-            left += [y]
-        elif y == pivot:
-            mid += [y]
-        else:
-            right += [y]
-    left_s = quick_sort(left)
-    right_s = quick_sort(right)
-    return left_s + mid + right_s
+#     return m
 
 
-print(quick_sort(list1))
+# list1 = [1, 3, 5, 8, 11, 2, 4, 7, 9]
 
-# Code Bubble Sort
+# # print(merge_step(list1, list2))
 
-
-def bubble_sort(x):
-    n = len(x)
-    for i in range(n):
-        for j in range(0, n - i - 1):
-            if x[j] > x[j + 1]:
-                temp = x[j]
-                x[j] = x[j + 1]
-                x[j + 1] = temp
-    return x
+# # HOMEWORK ASSIGNED 10/18 - Code up MergeSort! Use the merge_step in order to code MergeSort. I want you to try to do it using recursion, but it's not entirely necessary. If you get stuck trying to do it in recursion, you can just use loops.
 
 
-print(bubble_sort(list1))
+# def merge_sort(x):
+#     if len(x) <= 1:
+#         return x
+#     middle = len(x) // 2
+#     l = x[:middle]
+#     r = x[middle:]
 
-# Code a stack using Object oriented programming
+#     left_s = merge_sort(l)
+#     right_s = merge_sort(r)
+
+#     return merge_step(left_s, right_s)
+
+# # print(merge_sort(list1))
+
+
+# # HOMEWORK ASSIGNED OCT 25
+# # I'll send you notes on quicksort
+# # Try finishing this function!
+# def quick_sort(x):
+#     if len(x) <= 1:
+#         return x
+#     pivot_index = len(x) // 2
+#     pivot = x[pivot_index]
+#     left = []
+#     mid = []
+#     right = []
+#     for y in x:
+#         if y < pivot:
+#             left += [y]
+#         elif y == pivot:
+#             mid += [y]
+#         else:
+#             right += [y]
+#     left_s = quick_sort(left)
+#     right_s = quick_sort(right)
+#     return left_s + mid + right_s
+
+
+# # print(quick_sort(list1))
+
+# # Code Bubble Sort
+
+
+# def bubble_sort(x):
+#     n = len(x)
+#     for i in range(n):
+#         for j in range(0, n - i - 1):
+#             if x[j] > x[j + 1]:
+#                 temp = x[j]
+#                 x[j] = x[j + 1]
+#                 x[j + 1] = temp
+#     return x
+
+
+# # print(bubble_sort(list1))
+
+# # Code a stack using Object oriented programming
 
 
 class Stack:
@@ -150,6 +150,9 @@ class Stack:
     def size(self):
         return len(self.items)
 
+    def __repr__(self): 
+        return str(self.items)
+
 # Write up the Queue class
 # Also I'll give you some exercises using stacks and queues
 
@@ -170,3 +173,55 @@ class Queue:
         front = self.items[0]
         self.items = self.items[1:]
         return front
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self.items[0]
+    
+    def length(self):
+        return len(self.items)
+
+q = Queue()
+l = [1, 2, 3, 4, 5]
+for i in l: 
+    q.enqueue(i)
+
+# Use your stack class to identify balaned parenthesis 
+# "(()())" -> True 
+# "(()" -> False 
+# "([{}])" -> True 
+# ")("
+
+def balanced_paren(x):
+    stack = Stack()
+    list_open = "([{"
+    close = "}])"
+
+    print(stack)
+    for i in x:
+        if i in list_open:
+            stack.push(i)
+            print(stack)
+        elif i in close:
+            if stack.is_empty():
+                print("return 1")
+                return False
+            top = stack.pop()
+            match = False
+            for j in range(len(list_open)):
+                print(list_open[j], top)
+                print(close[j], i)
+                print("---")
+                if list_open[j] == top and close[j] == i:
+                    print("here")
+                    match = True
+                    break
+
+    print("return 3")                
+    return stack.is_empty()
+
+p = "(()())"
+print(balanced_paren(p))
+
+# HOMEWORK: Build a queue using only two stacks 
