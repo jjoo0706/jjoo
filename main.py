@@ -225,3 +225,21 @@ p = "(()())"
 print(balanced_paren(p))
 
 # HOMEWORK: Build a queue using only two stacks 
+class QueueStack:
+    def __init__(self):
+        self.in_stack = Stack()
+        self.out_stack = Stack()
+    
+    def is_empty(self):
+        return self.in_stack.is_empty() and self.out_stack.is_empty()
+
+    def enqueue(self, item):
+        self.in_stack.push(item)
+
+    def dequeue(self, item):
+        if self.is_empty():
+            return None
+        if self.out_stack.is_empty():
+            while not self.in_stack.is_empty():
+                self.out_stack.push(self.in_stack.pop())
+        return self.out_stack.pop()
