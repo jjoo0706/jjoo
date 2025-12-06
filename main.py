@@ -182,10 +182,10 @@ class Queue:
     def length(self):
         return len(self.items)
 
-q = Queue()
-l = [1, 2, 3, 4, 5]
-for i in l: 
-    q.enqueue(i)
+# q = Queue()
+# l = [1, 2, 3, 4, 5]
+# for i in l: 
+    # q.enqueue(i)
 
 # Use your stack class to identify balaned parenthesis 
 # "(()())" -> True 
@@ -222,7 +222,7 @@ def balanced_paren(x):
     return stack.is_empty()
 
 p = "(()())"
-print(balanced_paren(p))
+# print(balanced_paren(p))
 
 # HOMEWORK: Build a queue using only two stacks 
 class QueueStack:
@@ -236,10 +236,75 @@ class QueueStack:
     def enqueue(self, item):
         self.in_stack.push(item)
 
-    def dequeue(self, item):
+    def dequeue(self):
         if self.is_empty():
             return None
         if self.out_stack.is_empty():
             while not self.in_stack.is_empty():
                 self.out_stack.push(self.in_stack.pop())
         return self.out_stack.pop()
+    
+    def peek(self):
+        if self.is_empty():
+            return None
+        if self.out_stack.is_empty():
+            while not self.in_stack.is_empty():
+                self.out_stack.push(self.in_stack.pop())
+        return self.out_stack.peek()
+
+    def length(self):
+        return self.in_stack.size() + self.out_stack.size()
+
+    def __repr__(self):
+        temp_in = []
+        temp_out = []
+        for i in self.out_stack.items[::-1]:
+            temp_out += [i]
+        for i in self.in_stack.items:
+            temp_in += [i]
+        return str(temp_out + temp_in)
+
+q = QueueStack()
+for i in [1, 2, 3, 4, 5]:
+    q.enqueue(i)
+# print(repr(q))
+# print(q.length())
+# print(q.peek())
+# print(q.dequeue())
+# print(q.dequeue())
+# print(repr(q))
+# print(q.length())
+# print(q.peek())
+
+# Use the Queue object to build a "Hot Potato"
+# List of names, an integer number $n$ 
+# After passing the number n times, remove the name at the top of queue 
+# Continue to do this until there is one name left. 
+
+def hot_potato(names, n):
+    q = Queue()
+    for i in names:
+        q.enqueue(i)
+    while q.length() > 1:
+        for i in range(n):
+            q.enqueue(q.dequeue())
+        q.dequeue()
+    return q.dequeue()
+
+names = ["Russell", "Ethan", "Daniel", "Luke", "Ryan"]
+print(hot_potato(names, 3))
+
+# Build a stack out of two queues. 
+# 12/6 - Start today, but finish for homework 
+# Write a test for your StackQueue 
+
+class StackQueue():
+    def __init__(self):
+        self.q1 = Queue()
+        self.q2 = Queue()
+    def is_empty(self):
+        return self.q1.is_empty
+    def push(self, item):
+        self.q2.enqueue(item)
+        
+
