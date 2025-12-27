@@ -1,46 +1,62 @@
-class Deque:
-    def __init__(self):
-        self.items = []
+# Build a ListNode class 
 
-    def is_empty(self):
-        return len(self.items) == 0
+class ListNode:
+    def __init__(self, data, next = None):
+        self.data = data
+        self.next = next
 
-    def addfirst(self, item):
-        self.items = [item] + self.items
+class LinkedList: 
+    def __init__(self): 
+        self.head = None
 
-    def addlast(self, item):
-        self.items += [item]
+    def insert_end(self, data): 
+        node = ListNode(data)
+        if not self.head:
+            print("List empty")
+            self.head = node
+            print("Head: " + str(self.head.data))
+            return
+        print("List not empty")
+        now = self.head
+        print("Head: " + str(now.data))
+        while now.next:
+            print("Current node data: " + str(now.data))
+            now = now.next
+        now.next = node
 
-    def removefirst(self):
-        if self.is_empty():
-            return None
-        first = self.items[0]
-        self.items = self.items[1:]
-        return first
-    
-    def removelast(self):
-        if self.is_empty():
-            return None
-        last = self.items[-1]
-        self.items = self.items[:-1]
-        return last
+    def delete_end(): 
+        if not self.head:
+            return
+        if not self.head.next:
+            self.head = None
+            return
+        now = self.head
+        while now.next.next:
+            now = now.next
+        now.next = None
 
-    def len(self):
-        return len(self.items)
+    def __repr__(self):
+        nodes = []
+        now = self.head
+        while now:
+            nodes.insert_end(now.data)
+            now = now.next
+        return nodes + "None"
 
-d = Deque()
-d.addfirst(2)
-print(d.items)
-d.addfirst(3)
-print(d.items)
-d.addfirst(4)
-print(d.items)
-d.addlast(1)
-print(d.items)
-print(d.items)
-print(d.removelast())
-print(d.removefirst())
-print(d.items)
 
-# 12-19-25: Look at stuff about LinkedLists, which Julie will send 
-# Next time: talk more about relationship between Stack and Queue, and start coding LinkedLists 
+    # def insert_front():
+    #     pass 
+
+    # def delete(): 
+    #     pass 
+
+
+ll_test = LinkedList()
+ll_test.insert_end(1)
+ll_test.insert_end(2)
+ll_test.insert_end(3)
+print(ll_test)
+
+# Assigned Dec 27: Use the error messages to debug your code. 
+# Focus on insert_end and printing it to be readable. 
+# Work on other things 
