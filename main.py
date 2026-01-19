@@ -24,7 +24,7 @@ class LinkedList:
             now = now.next
         now.next = node
 
-    def delete_end(): 
+    def delete_end(self): 
         if not self.head:
             return
         if not self.head.next:
@@ -39,9 +39,9 @@ class LinkedList:
         nodes = []
         now = self.head
         while now:
-            nodes.insert_end(now.data)
+            nodes += [now.data]
             now = now.next
-        return nodes + "None"
+        return str(nodes) + " None"
 
 
     # def insert_front():
