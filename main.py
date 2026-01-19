@@ -43,7 +43,6 @@ class LinkedList:
             now = now.next
         return str(nodes) + " None"
 
-
     # def insert_front():
     #     pass 
 
