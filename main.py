@@ -18,21 +18,7 @@ class LinkedList:
             return
         self.tail.next = node
         self.tail = node
-
-        # node = ListNode(data)
-        # if not self.head:
-        #     print("List empty")
-        #     self.head = node
-        #     print("Head: " + str(self.head.data))
-        #     return
-        # print("List not empty")
-        # now = self.head
-        # print("Head: " + str(now.data))
-        # while now.next:
-        #     print("Current node data: " + str(now.data))
-        #     now = now.next
-        # now.next = node
-
+    
     def delete_end(self):
         if self.head == None:
             return None
@@ -48,15 +34,6 @@ class LinkedList:
         now.next = None
         self.tail = now
         return data
-        # if not self.head:
-        #     return
-        # if not self.head.next:
-        #     self.head = None
-        #     return
-        # now = self.head
-        # while now.next.next:
-        #     now = now.next
-        # now.next = None
 
     def __repr__(self):
         nodes = []
@@ -80,15 +57,15 @@ class LinkedList:
 
     # def insert_loc(self, )
 
-ll_test = LinkedList()
-ll_test.insert_end(1)
-print(ll_test)
-ll_test.insert_end(2)
-print(ll_test)
-ll_test.insert_end(3)
-print(ll_test)
-print(ll_test.delete_end())
-print(ll_test)
+# ll_test = LinkedList()
+# ll_test.insert_end(1)
+# print(ll_test)
+# ll_test.insert_end(2)
+# print(ll_test)
+# ll_test.insert_end(3)
+# print(ll_test)
+# print(ll_test.delete_end())
+# print(ll_test)
 
 # Build a queue out of a linkedlist 
 
@@ -121,15 +98,67 @@ class LL_Queue:
     def __repr__(self):
         return repr(self.list)
 
-q= LL_Queue()
-q.enqueue(1)
+# q= LL_Queue()
+# q.enqueue(1)
 # print(q)
-q.enqueue(2)
+# q.enqueue(2)
 # print(q)
-q.enqueue(3)
+# q.enqueue(3)
 # print(q)
-q.enqueue(4)
+# q.enqueue(4)
 # print(q)
 # print(q.dequeue())
 # print(q.dequeue())
 # print(q)
+
+# Write a function that will take in a Linked List object and reverse the order.
+# 1 -> 2 -> 3 -> 4 -> null 
+# 4 -> 3 -> 2 -> 1 -> null 
+
+def reverse(l):
+    new_list = LinkedList()
+    now = l.head
+    while now is not None:
+        new_list.insert_front(now.data)
+        now = now.next
+    return new_list
+
+def reverse1(Linked_List):
+    list = []
+    num = []
+    now = Linked_List.head
+    while now is not None:
+        num += [now.data]
+        now = now.next
+    i = len(num) - 1
+    while i >= 0:
+        list += [num[i]]
+        i -= 1
+    list += ["None"]
+    return list
+
+
+    # new = Linked_List
+    # prev = None
+    # now = new.head
+    # new.tail = now
+    # while now is not None:
+        # next = now.next
+        # now.next = prev
+        # prev = now
+        # now = next
+    # new.head = prev
+    # return (new)
+
+l = LinkedList()
+l.insert_end(1)
+l.insert_end(2)
+l.insert_end(3)
+print(reverse(l))
+print("l", l)
+rl = reverse(l)
+print("l", l)
+print("rl", rl)
+
+
+
