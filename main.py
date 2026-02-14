@@ -160,5 +160,31 @@ rl = reverse(l)
 print("l", l)
 print("rl", rl)
 
+class Node:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 
+def Cycle(head):
+    slow = head
+    fast = head
+    while fast is not None and fast.next is not None:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:
+            return True
+    return False
+
+
+a = Node(1)
+b = Node(2)
+c = Node(3)
+d = Node(4)
+
+a.next = b
+b.next = c
+c.next = d
+d.next = b
+
+print(Cycle(a))
 
