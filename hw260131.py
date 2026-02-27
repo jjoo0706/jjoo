@@ -21,6 +21,7 @@ class Node:
             now = now.next
         return result
 
+
 def Cycle(head):
     slow = head
     fast = head
@@ -45,16 +46,19 @@ d.next = e
 
 print(Cycle(a))
 
- # QUESTION 2
- # Write a function that will reorder nodes so that:
- # 1. All the nodes < x will come before
- # 2. All the nodes >= x will come after
- # 3. The order of the nodes is preserved
- # Example:
- # Input: 1 -> 4 -> 3 -> 2 -> 5 -> 1, x = 3
- # Output: 1 -> 2 -> 1 -> 3 -> 4 -> 5
+# QUESTION 2
+# Write a function that will reorder nodes so that:
+# 1. All the nodes < x will come before
+# 2. All the nodes >= x will come after
+# 3. The order of the nodes is preserved
+# Example:
+# Input: 1 -> 4 -> 3 -> 2 -> 5 -> 1, x = 3
+# Output: 1 -> 2 -> 1 -> 3 -> 4 -> 5
+
 
 def reorder(head, x):
+    if head is None:
+        return None
     small = None
     s_tail = None
     big = None
@@ -84,6 +88,7 @@ def reorder(head, x):
     else:
         return big
 
+
 values = [1, 4, 6, 2, 3, 5, 7]
 
 head = None
@@ -102,5 +107,5 @@ for val in values:
 new_head = reorder(head, 3)
 print(new_head)
 
-# HW ASSIGNED 260221 - fix the bug on QUESTION 2 
-# git 
+# HW ASSIGNED 260221 - fix the bug on QUESTION 2
+# git
