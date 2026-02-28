@@ -103,9 +103,13 @@ for val in values:
         tail.next = new_node
         tail = new_node
 
-
 new_head = reorder(head, 3)
 print(new_head)
 
 # HW ASSIGNED 260221 - fix the bug on QUESTION 2
 # git
+
+
+# HW 2/27/26 
+# make a github repo - either make it public or private 
+# look at this page for private: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
