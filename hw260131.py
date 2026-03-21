@@ -113,6 +113,6 @@ print(new_head)
 # HW 2/27/26 
 # make a github repo - either make it public or private 
 # look at this page for private: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
-# add me as a collaborator - hajulie
+# add me as a collaborator - hajulie    
 # 1) create a README file 
 # 2) push a hello_world.py file into your repo
