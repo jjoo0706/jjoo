@@ -95,3 +95,22 @@ print(ll_test)
 # Given a list as a DoubleLinkedList object, return a new a DoublyLinkedList object, where the list is reversed
 # 1 -> 2 -> 3
 # 3 -> 2 -> 1
+
+
+def reverse_dllist(DLL):
+    new_list = DoublyLinkedList()
+    current = DLL.tail
+    while current:
+        new_list.insert_end(current.data)
+        current = current.prev
+    return new_list
+
+
+DLL = DoublyLinkedList()
+DLL.insert_end(1)
+DLL.insert_end(2)
+DLL.insert_end(3)
+print(DLL)
+rev = reverse_dllist(DLL)
+print(rev)
+print(DLL)
