@@ -114,3 +114,36 @@ print(DLL)
 rev = reverse_dllist(DLL)
 print(rev)
 print(DLL)
+
+# Exercise 2: Split a DoublyLinkedList into two lists 
+# You do not know the length of the list 
+# hint: use a slow and fast pointer 
+# 1 <-> 2 <-> 3 <-> 4 <-> 5
+# output: 1 <-> 2 <-> 3
+#  4 <-> 5 
+
+def split_dllist(DLL):
+    if DLL.head is None:
+        return DoublyLinkedList(), DoublyLinkedList()
+    slow = DLL.head
+    fast = DLL.head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    first = DoublyLinkedList()
+    second = DoublyLinkedList()
+    current = DLL.head
+    while current != slow:
+        first.insert_end(current.data)
+        current = current.next
+    while current:
+        second.insert_end(current.data)
+        current = current.next
+    return first, second
+
+DLL = DoublyLinkedList()
+for i in range(1, 6):
+    DLL.insert_end(i)
+a, b = split_dllist(DLL)
+print(a)
+print(b)
