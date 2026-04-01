@@ -1,18 +1,19 @@
-# Doubly Linked List 
-# Instead of ONLY having a pointer that goes forward, we'll also have a pointer that goes backwards. 
+# Doubly Linked List
+# Instead of ONLY having a pointer that goes forward, we'll also have a pointer that goes backwards.
 
 class ListNode:
-    def __init__(self, data, next = None, prev = None):
+    def __init__(self, data, next=None, prev=None):
         self.data = data
         self.next = next
         self.prev = prev
 
-class DoublyLinkedList: 
-    def __init__(self): 
+
+class DoublyLinkedList:
+    def __init__(self):
         self.head = None
         self.tail = None
 
-    def insert_end(self, data): 
+    def insert_end(self, data):
         node = ListNode(data)
         if self.head == None:
             self.head = node
@@ -21,7 +22,7 @@ class DoublyLinkedList:
         self.tail.next = node
         node.prev = self.tail
         self.tail = node
-    
+
     def delete_end(self):
         if self.head == None:
             return None
@@ -45,7 +46,7 @@ class DoublyLinkedList:
         self.head.prev = node
         self.head = node
 
-    def delete_front(self): 
+    def delete_front(self):
         if self.head is None:
             return None
         if self.head == self.tail:
@@ -65,26 +66,32 @@ class DoublyLinkedList:
             nodes += [now.data]
             now = now.next
         return str(nodes)
-    
+
+
 ll_test = DoublyLinkedList()
 
-# Insert at front 
+# Insert at front
 ll_test.insert_front(3)
 print(ll_test)
 ll_test.insert_front(1)
 print(ll_test)
-# Insert multiple 
+# Insert multiple
 ll_test.insert_end(5)
 print(ll_test)
 ll_test.insert_end(7)
 print(ll_test)
 ll_test.insert_end(9)
 print(ll_test)
-# Delete head 
+# Delete head
 print(ll_test.delete_front())
 print(ll_test)
-# Delete middle 
+# Delete middle
 mid = ll_test.head.next.next
 mid.prev.next = mid.next
 mid.next.prev = mid.prev
 print(ll_test)
+
+# Exercise 1: Reverse a list
+# Given a list as a DoubleLinkedList object, return a new a DoublyLinkedList object, where the list is reversed
+# 1 -> 2 -> 3
+# 3 -> 2 -> 1
