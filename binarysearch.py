@@ -8,8 +8,40 @@ def linear_search(list, query):
     return "None"
 
 numbers = [3, 1, 5, 7, 4, 9]
-print(linear_search(numbers, 5))
+# print(linear_search(numbers, 5))
 
 # 1. Create a branch that is named binary-search 
 # 2. Switch into that branch 
 # 3. Push your files into binary-search branch
+# DONE 
+
+# Binary search slides: https://www.cs.cmu.edu/~15122/handouts/slides/review/06-binsearch.pdf
+
+# Let's start with the first round of binary search 
+
+def binary_search(lst, target):
+    left = 0
+    right = len(lst) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        mid_value = lst[mid]
+        if mid_value == target:
+            return True
+        elif target < mid_value:
+            right = mid - 1
+        else:
+            left = mid + 1
+    return False
+
+nums = [1, 3, 4, 7, 8, 11, 15]
+print(binary_search(nums, 7))
+
+# Exercise 1: In a list of repeating items, find the first instance of the item. Return index of first instance. 
+# [1,2,2,2,3], 2 -> 1 
+
+# Exercise 2: In a list of repeating items, find the last instance of the item. Return index of last instance. 
+# [1,2,2,2,3], 2 -> 3 
+
+# Exercise 3: In a list of repeating items, count the number of instances that a query has. 
+# [1,2,2,2,3], 2 -> 3 
+
