@@ -60,6 +60,28 @@ print(first(nums, 3))
 # Exercise 2: In a list of repeating items, find the last instance of the item. Return index of last instance. 
 # [1,2,2,2,3], 2 -> 3 
 
+def last(lst, target):
+    left = 0
+    right = len(lst) -1
+    result = -1
+    while left <= right:
+        mid = (left + right) // 2
+        if lst[mid] == target:
+            result = mid
+            left = mid + 1
+        elif lst[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return result
+
+
 # Exercise 3: In a list of repeating items, count the number of instances that a query has. 
 # [1,2,2,2,3], 2 -> 3 
 
+def repeating_items(lst, target):
+    first_occ = first(lst, target)
+    if first_occ == -1:
+        return 0
+    last_occ = last(lst, target)
+    return last - first + 1 
